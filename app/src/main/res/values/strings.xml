@@ -1,14 +1,18 @@
 <resources>
     <string name="app_name">MediCheck</string>
-    <string name="title_home">Home</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profile</string>
-    <string name="product_name">ProductName</string>
-    <string name="best_before">BestBeforeDate</string>
-    <string name="see_details_button">See more</string>
-    <string name="title_details">Details</string>
-    <string name="title_products">List</string>
-    <string name="add_to_favourite">Favourite</string>
-    <string name="ingredients">Ingredients</string>
+    <string name="title_home">HOME</string>
+    <string name="title_notifications">NOTIFICATIONS</string>
+    <string name="title_profile">PROFILE</string>
+
+    <string name="product_name">NAME</string>
+    <string name="ingredients">INGREDIENTS</string>
+    <string name="best_before">BEST BEFORE</string>
+
+    <string name="see_details">SEE MORE</string>
+    <string name="title_details">PRODUCT DETAILS</string>
+
+    <string name="title_products">PRODUCT LIST</string>
+    <string name="add_to_favourite">FAVOURITE</string>
+
 
 </resources>

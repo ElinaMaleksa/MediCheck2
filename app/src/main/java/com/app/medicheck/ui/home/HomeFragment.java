@@ -46,9 +46,23 @@ public class HomeFragment extends Fragment {
     }
 
     public void createList() {
-        mProductList.add(new Products("Sinupret","12/12/2020"));
-        mProductList.add(new Products("Xyzal","05/05/2020"));
-        mProductList.add(new Products("Linex","01/10/2021"));
+        mProductList.add(new Products("Sinupret", "1 coated tablet contains:\n\n" +
+                "Active substance:\n" +
+                "160.00 mg dry extract (3-6:1) of gentian root, primula flowers, sorrel herb,\n" +
+                "elder flowers, verbena herb (1:3:3:3:3) 1. Extracting agent: ethanol 51%\n\n" +
+                "The other ingredients are:\n" +
+                "Spray-dried gum arabic, calcium carbonate, carnauba wax, cellulose\n" +
+                "powder, microcrystalline cellulose, chlorophyll powder 25% (E140),\n" +
+                "dextrin (from corn starch), glucose syrup, hypromellose, indigocarmine,\n" +
+                "aluminium salt (E 132), magnesium stearate (Ph.Eur.) [vegetable],\n" +
+                "maltodextrin, riboflavin (E 101), highly dispersed silicon dioxide, highly\n" +
+                "dispersed hydrophobic silicon dioxide, stearic acid, sucrose, talc, titanium\n" +
+                "dioxide (E 171).\n\n" +
+                "Note for diabetics:\n" +
+                "One coated tablet contains on average 0.026 carbohydrate exchange units\n" +
+                "(CEU). Sinupret extract is gluten-free and lactose-free.","12/12/2020"));
+        mProductList.add(new Products("Xyzal", "ingred Xyzal","05/05/2020"));
+        mProductList.add(new Products("Linex", "ingred Linex","01/10/2021"));
         //add products to list
         mRecyclerViewAdapter = new RecyclerViewAdapter(HomeFragment.this, mProductList);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
