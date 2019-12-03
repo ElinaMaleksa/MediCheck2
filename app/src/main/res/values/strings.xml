@@ -3,4 +3,12 @@
     <string name="title_home">Home</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
+    <string name="product_name">ProductName</string>
+    <string name="best_before">BestBeforeDate</string>
+    <string name="see_details_button">See more</string>
+    <string name="title_details">Details</string>
+    <string name="title_products">List</string>
+    <string name="add_to_favourite">Favourite</string>
+    <string name="ingredients">Ingredients</string>
+
 </resources>
