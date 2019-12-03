@@ -21,21 +21,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mName, mBestBefore;
+        TextView mName, mIngredients, mBestBefore;
         private ImageButton mButtonSeeMore;
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mName = itemView.findViewById(R.id.product_name);
+            mIngredients = itemView.findViewById(R.id.ingredients);
             mBestBefore = itemView.findViewById(R.id.best_before);
             mButtonSeeMore = itemView.findViewById(R.id.button_see_details);
 
             mButtonSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(v.getContext(), "Clicked SeeMoreButton", Toast.LENGTH_SHORT).show();
+                String nameProduct = mName.getText().toString();
+                String bestBefore = mBestBefore.getText().toString();
+                String ingredients = mIngredients.getText().toString();
+
                 Intent intent = new Intent(mButtonSeeMore.getContext(), ProductDetailsActivity.class);
+                intent.putExtra("product_name", nameProduct);
+                intent.putExtra("product_ingredients", ingredients);
+                intent.putExtra("product_best_before", bestBefore);
                 mButtonSeeMore.getContext().startActivity(intent);
 
             }
@@ -61,6 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
         holder.mName.setText(mProductsList.get(i).getName());
         holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
+        holder.mIngredients.setText(mProductsList.get(i).getIngredients());
 
     }
 
