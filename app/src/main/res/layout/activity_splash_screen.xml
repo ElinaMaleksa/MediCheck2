@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <RelativeLayout android:background="#f1f1f1" android:layout_height="match_parent"
+    android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:src="@drawable/logo"
+        android:layout_centerInParent="true" android:id="@+id/logo"/>
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent" android:text="MediCheck"
+        android:layout_alignParentBottom="true" android:gravity="center_horizontal"
+        android:textColor="#454545" android:textSize="12dp" android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>
