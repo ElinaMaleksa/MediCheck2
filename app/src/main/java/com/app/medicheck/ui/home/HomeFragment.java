@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,5 +67,12 @@ public class HomeFragment extends Fragment {
         //add products to list
         mRecyclerViewAdapter = new RecyclerViewAdapter(HomeFragment.this, mProductList);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
+    }
+    public void onResume() {
+        super.onResume();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null && activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().hide();
+        }
     }
 }
