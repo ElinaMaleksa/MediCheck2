@@ -2,25 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/Item1"
+        android:id="@+id/profile_toolbar_item_about"
         android:title="@string/profile_toolbar_menu_title1"
         app:showAsAction="never"
-
-
-        ></item>
+        />
     <item
-        android:id="@+id/Item2"
+        android:id="@+id/profile_toolbar_item_buy_products"
         android:title="@string/profile_toolbar_menu_title2"
         app:showAsAction="never"
+        />
 
 
-        ></item>
-    <item
-        android:id="@+id/Item3"
-        android:title="@string/profile_toolbar_menu_title3"
-        app:showAsAction="never"
-
-
-        ></item>
 
 </menu>

@@ -14,7 +14,8 @@
     <string name="title_products">PRODUCT LIST</string>
     <string name="add_to_favourite">FAVOURITE</string>
 
-    <string name="profile_toolbar_menu_title1">Title1</string>
-    <string name="profile_toolbar_menu_title2">Title2</string>
-    <string name="profile_toolbar_menu_title3">Title3</string>
+    <string name="profile_toolbar_menu_title1">About</string>
+    <string name="profile_toolbar_menu_title2">Buy products</string>
+
+    <string name="profile_about_title">About us</string>
 </resources>

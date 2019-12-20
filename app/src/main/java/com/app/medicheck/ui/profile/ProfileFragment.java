@@ -1,6 +1,9 @@
 package com.app.medicheck.ui.profile;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +25,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.app.medicheck.MainActivity;
 import com.app.medicheck.R;
+
+import java.net.URI;
 
 public class ProfileFragment extends Fragment {
 
@@ -61,11 +66,34 @@ public class ProfileFragment extends Fragment {
         profileToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
+
+                switch (item.getItemId()){
+                    case R.id.profile_toolbar_item_about:
+                        buildAboutDialog();
+                        Toast ToolbarToast = Toast.makeText(getContext(),"We did it!",Toast.LENGTH_SHORT);
+                        ToolbarToast.show();
+                        break;
+                    case R.id.profile_toolbar_item_buy_products:
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://lipsum.com"));
+                        startActivity(intent);
+                        break;
+                        default:
+                            break;
+                }
                 Toast ToolbarToast = Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT);
                 ToolbarToast.show();
                 return false;
             }
         });
+    }
+
+    public void buildAboutDialog () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.profile_about_title);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
