@@ -14,5 +14,9 @@
     <string name="title_products">PRODUCT LIST</string>
     <string name="add_to_favourite">FAVOURITE</string>
 
+    <string name="notificationTitle">My notification</string>
+    <string name="notificationText">My notification text</string>
+    <string name="channelName">Channel name</string>
+    <string name="channelDescription">Channel Description</string>
 
 </resources>

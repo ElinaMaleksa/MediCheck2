@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,8 +29,33 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+
+
             }
         });
+
+        Button notificationButton = root.findViewById(R.id.btnNotification);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+
+//
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationsFragment.this.getContext(), "Channel1")
+//                        .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+//                        .setContentTitle("title")
+//                        .setContentText("text")
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                        .setAutoCancel(true);
+//
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(NotificationsFragment.this.getContext());
+//
+//                // notificationId is a unique int for each notification that you must define
+//                notificationManager.notify(1, builder.build());
+           }
+        });
+
         return root;
     }
+
+
 }
