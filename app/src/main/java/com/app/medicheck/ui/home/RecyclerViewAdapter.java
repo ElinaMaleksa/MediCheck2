@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView mName, mIngredients, mBestBefore;
         private ImageButton mButtonSeeMore;
+        CheckBox mCheckBoxStar;
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -31,6 +33,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mIngredients = itemView.findViewById(R.id.ingredients);
             mBestBefore = itemView.findViewById(R.id.best_before);
             mButtonSeeMore = itemView.findViewById(R.id.button_see_details);
+            mCheckBoxStar = itemView.findViewById(R.id.add_item_to_favorite);
+
+            mCheckBoxStar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(((CompoundButton) view).isChecked()){
+                        System.out.println("Checked");
+
+                       /* String nameProduct = mName.getText().toString();
+                        String bestBefore = mBestBefore.getText().toString();
+                        String ingredients = mIngredients.getText().toString();
+
+                        Intent intent = new Intent(mCheckBoxStar.getContext(), ProfileFragment.class);
+                        intent.putExtra("product_name", nameProduct);
+                        intent.putExtra("product_ingredients", ingredients);
+                        intent.putExtra("product_best_before", bestBefore);
+                        //mCheckBoxStar.getContext().startActivity(intent);*/
+                    } else {
+                        System.out.println("Un-Checked");
+                    }
+                }
+            });
 
             mButtonSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
