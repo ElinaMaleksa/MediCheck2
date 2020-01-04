@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+.idea/misc.xml
+build.gradle
+.idea/misc.xml
