@@ -50,14 +50,17 @@ public class ProfileFragment extends Fragment {
 
         return root;
     }
-    public void onResume() {
-        super.onResume();
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null && activity.getSupportActionBar() != null) {
             activity.getSupportActionBar().hide();
             createActionBar();
         }
     }
+
 
     public void createActionBar () {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
