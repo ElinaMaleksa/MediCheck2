@@ -65,13 +65,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void createList() {
-//        HttpHandler httpHandler = new HttpHandler();
-//        String url = "https://ebiznessvia.000webhostapp.com/api/products/read.php";
-//        String json = httpHandler.makeServiceCall(url);
-//        Log.d("", "JSON FILE = "+json);
-
-
-
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url ="https://ebiznessvia.000webhostapp.com/api/products/read.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -79,7 +72,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.d("", "onResponse: " + response);
+//                        Log.d("", "onResponse: " + response);
                         productList = parseJsonToProductList(response);
 
                     }
@@ -92,6 +85,7 @@ public class HomeFragment extends Fragment {
         });
         stringRequest.setTag(TAG);
         queue.add(stringRequest);
+
 //        mProductList.add(new Products("Sinupret", "1 coated tablet contains:\n\n" +
 //                "Active substance:\n" +
 //                "160.00 mg dry extract (3-6:1) of gentian root, primula flowers, sorrel herb,\n" +
@@ -139,12 +133,12 @@ public class HomeFragment extends Fragment {
             JSONArray jsonArray = wholeJson.getJSONArray("records");
             for (int i = 0; i<jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Log.d("",""+jsonObject.getInt("id") );
-                Log.d("",""+jsonObject.getString("name") );
-                Log.d("",""+jsonObject.getString("category") );
-                Log.d("",""+jsonObject.getString("ingredients") );
-                Log.d("",""+jsonObject.getString("best_before") );
-                Log.d("",""+jsonObject.getString("serial_number") );
+//                Log.d("",""+jsonObject.getInt("id") );
+//                Log.d("",""+jsonObject.getString("name") );
+//                Log.d("",""+jsonObject.getString("category") );
+//                Log.d("",""+jsonObject.getString("ingredients") );
+//                Log.d("",""+jsonObject.getString("best_before") );
+//                Log.d("",""+jsonObject.getString("serial_number") );
 
                 pL.add(new Products(
                         jsonObject.getInt("id"),
