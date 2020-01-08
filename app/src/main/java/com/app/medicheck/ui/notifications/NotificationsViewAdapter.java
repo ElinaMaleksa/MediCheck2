@@ -4,21 +4,9 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.app.medicheck.R;
-import com.app.medicheck.ui.home.HomeFragment;
-import com.app.medicheck.ui.home.ProductDetailsActivity;
-import com.app.medicheck.ui.home.Products;
-import com.app.medicheck.ui.home.RecyclerViewAdapter;
-import com.app.medicheck.ui.profile.Favourites;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,10 +47,8 @@ public class NotificationsViewAdapter extends RecyclerView.Adapter<Notifications
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
         holder.mName_N.setText(mContentNotificationsList.get(i).getNameNot());
-
         holder.mBestBefore_N.setText(mContentNotificationsList.get(i).getBestBeforeNot());
         holder.mWarning_N.setText(mContentNotificationsList.get(i).getWarning());
-
     }
     @Override
     public int getItemCount() {

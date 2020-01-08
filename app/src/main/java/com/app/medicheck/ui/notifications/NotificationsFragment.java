@@ -4,26 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.android.volley.RequestQueue;
+
 import com.app.medicheck.R;
-import com.app.medicheck.ui.home.HomeFragment;
-import com.app.medicheck.ui.home.Products;
-import com.app.medicheck.ui.home.RecyclerViewAdapter;
+
 
 import java.util.ArrayList;
 

@@ -16,12 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.medicheck.R;
 import com.app.medicheck.ui.home.ProductDetailsActivity;
 import com.app.medicheck.ui.home.Products;
-import com.app.medicheck.ui.home.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<FavouritesRecyclerViewAdapter.RecyclerViewHolder>{
     ProfileFragment mProfileFragment;
     ArrayList<Products> mProductsList;
     List<String> myFav;
@@ -80,7 +79,6 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                     intent.putExtra("product_best_before", bestBefore);
                     intent.putExtra("product_serial_number", serialNumber);
                     mButtonSeeMore.getContext().startActivity(intent);
-
                 }
             });
         }
@@ -93,15 +91,15 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     @NonNull
-    public RecyclerViewAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(mProfileFragment.getContext());
-        View view = layoutInflater.inflate(R.layout.product_list_item, viewGroup, false);
+        View viewFav = layoutInflater.inflate(R.layout.product_list_item, viewGroup, false);
 
-        return new RecyclerViewAdapter.RecyclerViewHolder(view);
+        return new RecyclerViewHolder(viewFav);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.RecyclerViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
         holder.mName.setText(mProductsList.get(i).getName());
         holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
         holder.mIngredients.setText(mProductsList.get(i).getIngredients());
@@ -113,13 +111,10 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 holder.mCheckBoxStar.setChecked(true);
             }
         }
-
     }
-
 
     @Override
     public int getItemCount() {
         return (mProductsList == null) ? 0 : mProductsList.size();
     }
 }
-
