@@ -23,6 +23,8 @@
     <string name="channelDescription">Channel Description</string>
 
     <string name="profile_about_title">About us</string>
+    <string name="profile_about_message">We are a great team called EJUMO. To contact us you can write a letter: Tērbatas street 10, Valmiera, LV-4201 </string>
     <string name="warning_to_expire">WARNING</string>
+    <string name="title_notif_list">NOTIFICATIONS</string>
     <string name="title_favourite_items">FAVOURITE ITEMS</string>
 </resources>

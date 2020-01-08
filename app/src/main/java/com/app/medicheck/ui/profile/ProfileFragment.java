@@ -61,8 +61,8 @@ public class ProfileFragment extends Fragment {
                 switch (item.getItemId()){
                     case R.id.profile_toolbar_item_about:
                         buildAboutDialog();
-                        Toast ToolbarToast = Toast.makeText(getContext(),"We did it!",Toast.LENGTH_SHORT);
-                        ToolbarToast.show();
+                        //Toast ToolbarToast = Toast.makeText(getContext(),"We did it!",Toast.LENGTH_SHORT);
+                        //ToolbarToast.show();
                         break;
                     case R.id.profile_toolbar_item_buy_products:
                         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -72,8 +72,8 @@ public class ProfileFragment extends Fragment {
                         default:
                             break;
                 }
-                Toast ToolbarToast = Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT);
-                ToolbarToast.show();
+                //Toast ToolbarToast = Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT);
+                //ToolbarToast.show();
                 return false;
             }
         });
@@ -82,6 +82,7 @@ public class ProfileFragment extends Fragment {
     public void buildAboutDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.profile_about_title);
+        builder.setMessage(R.string.profile_about_message);
         AlertDialog dialog = builder.create();
         dialog.show();
     }

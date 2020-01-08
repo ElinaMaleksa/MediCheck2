@@ -13,7 +13,7 @@
             android:id="@+id/titleDetails_notifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_favourite_items"
+            android:text="@string/title_notif_list"
             android:textSize="20sp"
             android:textColor="@color/colorTextBlack"
             android:layout_marginTop="25dp"
