@@ -34,7 +34,7 @@ import static com.android.volley.toolbox.Volley.*;
 public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     ArrayList<Products> mProductList;
-    RecyclerViewAdapter mRecyclerViewAdapter;
+    HomeRecyclerViewAdapter mRecyclerViewAdapter;
     public static final String TAG = "queueItem";
     RequestQueue queue;
     ArrayList<Products> productList;
@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
 //        mProductList.add(new Products("Linex", "ingred Linex","01/10/2021"));
         //add products to list
 //        mRecyclerViewAdapter = new RecyclerViewAdapter(HomeFragment.this, mProductList);
-        mRecyclerViewAdapter = new RecyclerViewAdapter(HomeFragment.this, productList);
+        mRecyclerViewAdapter = new HomeRecyclerViewAdapter(HomeFragment.this, productList);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
     }
     public void onResume() {
