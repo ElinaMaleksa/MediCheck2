@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity {
         List<String> f;
         f = Favourites.getData();
 
-        for (String s : f) {
-            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        }
-
     }
 
 
