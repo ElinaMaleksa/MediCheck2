@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="100"
+    android:background="@color/grayLight"
+    android:gravity="center"
+    android:layout_marginBottom="5dp"
+    android:divider="?android:dividerVertical"
+    android:showDividers="middle"
+    android:padding="5dp"
+    android:minHeight="55dp">
+
+    <TextView
+        android:id="@+id/warning_to_expire"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="35"
+        android:gravity="center"
+        android:text="@string/warning_to_expire"
+        android:textColor="@color/colorTextBlack"
+        app:autoSizeTextType="uniform" />
+
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="35"
+        android:gravity="center"
+        android:text="@string/product_name"
+        android:textColor="@color/colorTextBlack"
+        app:autoSizeTextType="uniform" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/best_before"
+        app:autoSizeTextType="uniform"
+        android:layout_weight="30"
+        android:text="@string/best_before"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:textColor="@color/colorTextBlack" />
+
+
+</LinearLayout>

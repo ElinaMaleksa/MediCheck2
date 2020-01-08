@@ -23,4 +23,5 @@
     <string name="channelDescription">Channel Description</string>
 
     <string name="profile_about_title">About us</string>
+    <string name="warning_to_expire">WARNING</string>
 </resources>
