@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,28 +44,24 @@ public class ProfileFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        
+
+
+
+
         return root;
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null && activity.getSupportActionBar() != null) {
             activity.getSupportActionBar().hide();
             createActionBar();
-
         }
     }
-
-
 
     public void createActionBar () {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         androidx.appcompat.widget.Toolbar profileToolbar =(Toolbar) activity.findViewById(R.id.fragment_profile_toolbar);
-        Log.d("", "Activity = "+ activity);
-        Log.d("", "Toolbar = "+ profileToolbar);
         profileToolbar.inflateMenu(R.menu.profile_toolbar_menu);
         profileToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -76,19 +71,19 @@ public class ProfileFragment extends Fragment {
                 switch (item.getItemId()){
                     case R.id.profile_toolbar_item_about:
                         buildAboutDialog();
-//                        Toast ToolbarToast = Toast.makeText(getContext(),"We did it!",Toast.LENGTH_SHORT);
-//                        ToolbarToast.show();
+                        Toast ToolbarToast = Toast.makeText(getContext(),"We did it!",Toast.LENGTH_SHORT);
+                        ToolbarToast.show();
                         break;
                     case R.id.profile_toolbar_item_buy_products:
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-//                        intent.setData(Uri.parse("https://lipsum.com"));
+                        intent.setData(Uri.parse("https://lipsum.com"));
                         startActivity(intent);
                         break;
                         default:
                             break;
                 }
-//                Toast ToolbarToast = Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT);
-//                ToolbarToast.show();
+                Toast ToolbarToast = Toast.makeText(getContext(),item.getTitle(),Toast.LENGTH_SHORT);
+                ToolbarToast.show();
                 return false;
             }
         });
