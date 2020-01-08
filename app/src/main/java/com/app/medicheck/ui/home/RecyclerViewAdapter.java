@@ -1,5 +1,6 @@
 package com.app.medicheck.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.app.medicheck.R;
 import com.app.medicheck.ui.profile.Favourites;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -27,7 +29,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView mName, mIngredients, mBestBefore, mSerialNumber;
         private ImageButton mButtonSeeMore;
         CheckBox mCheckBoxStar;
-        Favourites favourite = new Favourites();
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -45,7 +46,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     if(((CompoundButton) view).isChecked()){
                         System.out.println("Checked");
                         //add serial number to favourite list
-                        favourite.setData("serial number");
+                        System.out.println("check method " + mSerialNumber.getText().toString());
+                        Favourites.setData(mSerialNumber.getText().toString());
                        /* String nameProduct = mName.getText().toString();
                         String bestBefore = mBestBefore.getText().toString();
                         String ingredients = mIngredients.getText().toString();
@@ -57,6 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         //mCheckBoxStar.getContext().startActivity(intent);*/
                     } else {
                         System.out.println("Un-Checked");
+                        Favourites.removeItem(mSerialNumber.getText().toString());
+
                     }
                 }
             });
@@ -101,6 +105,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
         holder.mIngredients.setText(mProductsList.get(i).getIngredients());
         holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
+
+        List <String> fav = Favourites.getData();
+        for (String s : fav) {
+            if (s.equals(mProductsList.get(i).getSerialNumber())) {
+                holder.mCheckBoxStar.setChecked(true);
+            }
+        }
 
     }
 

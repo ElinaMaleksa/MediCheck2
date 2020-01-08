@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.app.medicheck.ui.notifications.Receiver;
+import com.app.medicheck.ui.profile.Favourites;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +23,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.io.Console;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    Favourites fav = new Favourites();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,49 @@ public class MainActivity extends AppCompatActivity {
 
         setAlarm();
 
+        System.out.println("loading and getting data method");
+        Toast.makeText(this, "loading and getting data", Toast.LENGTH_SHORT).show();
+        Favourites.load(this);
+        List<String> f;
+        f = Favourites.getData();
+
+        for (String s : f) {
+            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+//    protected void onDestroy() {
+//        System.out.println("On destroy method");
+//        Favourites.save(this);
+//        super.onDestroy();
+//    }
+
+    protected void onStop() {
+        super.onStop();
+        System.out.println("On stop method");
+        Favourites.save(this);
+
+    }
+
+//    protected void onPause() {
+//        System.out.println("On pause method");
+//        fav.save(this);
+//        super.onPause();
+//    }
+
+    protected void onRestart() {
+        System.out.println("loading and getting data method");
+        Toast.makeText(this, "loading and getting data", Toast.LENGTH_SHORT).show();
+        Favourites.load(this);
+        List<String> f;
+        f = Favourites.getData();
+
+        for (String s : f) {
+            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        }
+        super.onRestart();
     }
 
     public void setAlarm(){
@@ -58,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
         //set alarm time (after that much ms it will trigger notification)
         //System.currentTimeMillis()+10000
         long timeInMillisec = calculateMilliseconds("2019-12-20").getTimeInMillis();
-        System.out.println(System.currentTimeMillis());
-        System.out.println(timeInMillisec);
 
         alarms.set(AlarmManager.RTC_WAKEUP, timeInMillisec, operation) ;
     }
@@ -86,10 +132,6 @@ public class MainActivity extends AppCompatActivity {
         int month = Integer.parseInt(dateComponents[1]);
         int day = Integer.parseInt(dateComponents[2]);
 
-        System.out.println("Year " + year);
-        System.out.println("month " + month);
-        System.out.println("day " + day);
-
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month - 1);
@@ -99,13 +141,6 @@ public class MainActivity extends AppCompatActivity {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
-        System.out.println("Year " + cal.get(Calendar.YEAR));
-        System.out.println("month " + cal.get(Calendar.MONTH));
-        System.out.println("day " + cal.get(Calendar.DAY_OF_MONTH));
-
-        System.out.println("Year " + year);
-        System.out.println("month " + month);
-        System.out.println("day " + day);
 
         return cal;
     }

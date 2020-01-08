@@ -17,7 +17,7 @@ public class Receiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
-        Toast.makeText(context, intent.getStringExtra("param"), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, intent.getStringExtra("param"), Toast.LENGTH_SHORT).show();
 
 
         notification.createNotification(context, "title", "text");
