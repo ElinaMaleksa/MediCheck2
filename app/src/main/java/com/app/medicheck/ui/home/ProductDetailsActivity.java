@@ -9,7 +9,7 @@ import com.app.medicheck.R;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProductDetailsActivity extends AppCompatActivity {
-    String nameProduct, bestBeforeProduct, ingredientsProduct;
+    String nameProduct, bestBeforeProduct, ingredientsProduct, serialNumberProduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,5 +31,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         bestBeforeProduct = intent.getStringExtra("product_best_before");
         TextView bestBeforeField = findViewById(R.id.bestBeforeDetails);
         bestBeforeField.setText(bestBeforeProduct);
+
+        serialNumberProduct = intent.getStringExtra("product_serial_number");
+        TextView serialNumberField = findViewById(R.id.serialNumberDetails);
+        serialNumberField.setText(serialNumberProduct);
+
+
     }
 }
