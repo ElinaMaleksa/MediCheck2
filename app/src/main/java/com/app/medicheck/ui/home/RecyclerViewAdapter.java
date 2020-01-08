@@ -10,8 +10,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.app.medicheck.R;
+import com.app.medicheck.ui.profile.Favourites;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView mName, mIngredients, mBestBefore;
         private ImageButton mButtonSeeMore;
         CheckBox mCheckBoxStar;
+        Favourites favourite = new Favourites();
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -40,7 +43,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View view) {
                     if(((CompoundButton) view).isChecked()){
                         System.out.println("Checked");
-
+                        //add serial number to favourite list
+                        favourite.setData("serial number");
                        /* String nameProduct = mName.getText().toString();
                         String bestBefore = mBestBefore.getText().toString();
                         String ingredients = mIngredients.getText().toString();
