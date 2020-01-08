@@ -1,6 +1,5 @@
 package com.app.medicheck.ui.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,12 @@ import com.app.medicheck.R;
 import com.app.medicheck.ui.profile.Favourites;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.RecyclerViewHolder>{
     HomeFragment mHomeFragment;
     ArrayList<Products> mProductsList;
 
@@ -84,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(HomeFragment homeFragment, ArrayList<Products> products) {
+    public HomeRecyclerViewAdapter(HomeFragment homeFragment, ArrayList<Products> products) {
         this.mHomeFragment = homeFragment;
         this.mProductsList = products;
     }
