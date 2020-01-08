@@ -61,9 +61,9 @@ public class HomeFragment extends Fragment {
                 "dioxide (E 171).\n\n" +
                 "Note for diabetics:\n" +
                 "One coated tablet contains on average 0.026 carbohydrate exchange units\n" +
-                "(CEU). Sinupret extract is gluten-free and lactose-free.","12/12/2020"));
-        mProductList.add(new Products("Xyzal", "ingred Xyzal","05/05/2020"));
-        mProductList.add(new Products("Linex", "ingred Linex","01/10/2021"));
+                "(CEU). Sinupret extract is gluten-free and lactose-free.","12/12/2020", "011"));
+        mProductList.add(new Products("Xyzal", "ingred Xyzal","05/05/2020", "111"));
+        mProductList.add(new Products("Linex", "ingred Linex","01/10/2021", "222"));
         //add products to list
         mRecyclerViewAdapter = new RecyclerViewAdapter(HomeFragment.this, mProductList);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);

@@ -30,24 +30,11 @@ import java.net.URI;
 
 public class ProfileFragment extends Fragment {
 
-    private ProfileViewModel mProfileViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mProfileViewModel =
-                ViewModelProviders.of(this).get(ProfileViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
-        mProfileViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-
-
-
+        
         return root;
     }
     public void onResume() {
@@ -95,6 +82,4 @@ public class ProfileFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-
 }

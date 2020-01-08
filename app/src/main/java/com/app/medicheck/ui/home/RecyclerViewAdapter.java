@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mName, mIngredients, mBestBefore;
+        TextView mName, mIngredients, mBestBefore, mSerialNumber;
         private ImageButton mButtonSeeMore;
         CheckBox mCheckBoxStar;
         Favourites favourite = new Favourites();
@@ -35,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mName = itemView.findViewById(R.id.product_name);
             mIngredients = itemView.findViewById(R.id.ingredients);
             mBestBefore = itemView.findViewById(R.id.best_before);
+            mSerialNumber = itemView.findViewById(R.id.serial_number);
             mButtonSeeMore = itemView.findViewById(R.id.button_see_details);
             mCheckBoxStar = itemView.findViewById(R.id.add_item_to_favorite);
 
@@ -66,11 +67,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String nameProduct = mName.getText().toString();
                 String bestBefore = mBestBefore.getText().toString();
                 String ingredients = mIngredients.getText().toString();
+                String serialNumber = mSerialNumber.getText().toString();
 
                 Intent intent = new Intent(mButtonSeeMore.getContext(), ProductDetailsActivity.class);
                 intent.putExtra("product_name", nameProduct);
                 intent.putExtra("product_ingredients", ingredients);
                 intent.putExtra("product_best_before", bestBefore);
+                intent.putExtra("product_serial_number", serialNumber);
                 mButtonSeeMore.getContext().startActivity(intent);
 
             }
@@ -97,6 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mName.setText(mProductsList.get(i).getName());
         holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
         holder.mIngredients.setText(mProductsList.get(i).getIngredients());
+        holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
 
     }
 
