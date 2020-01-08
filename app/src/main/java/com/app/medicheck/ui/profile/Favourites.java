@@ -5,10 +5,8 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public class Favourites {
@@ -24,14 +22,10 @@ public class Favourites {
         Set<String> hashSet = new HashSet<>();
         for(String s : set){
             hashSet = (Set) allPrefs.get(s);
-            System.out.println("Load method " + "<" + Objects.requireNonNull(allPrefs.get(s)).getClass().getSimpleName() +"> =  "
-                    + Objects.requireNonNull(allPrefs.get(s)).toString());
 
         }
-
-        for (String h:hashSet) {
-            data.add(h);
-        }
+        assert hashSet != null;
+        data.addAll(hashSet);
 
         /*for(Map.Entry<String,?> entry : keys.entrySet()){
 
@@ -42,7 +36,6 @@ public class Favourites {
     }
 
     public static void save(Context context) {
-        System.out.println("Save method ");
         SharedPreferences pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
@@ -61,15 +54,14 @@ public class Favourites {
     }
 
     public static List<String> getData() {
-        System.out.println("GetData method");
         return data;
     }
 
-/*    public static void setData(List<String> data) {
+     public static void setData(List<String> data) {
         Favourites.data = data;
-    }*/
+    }
+
     public static void setData(String serialNumber) {
-        System.out.println("setData method ");
         Favourites.data.add(serialNumber);
     }
 

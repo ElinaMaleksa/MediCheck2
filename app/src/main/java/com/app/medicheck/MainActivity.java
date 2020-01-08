@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         setAlarm();
 
-        System.out.println("loading and getting data method");
-        Toast.makeText(this, "loading and getting data", Toast.LENGTH_SHORT).show();
         Favourites.load(this);
         List<String> f;
         f = Favourites.getData();
@@ -69,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStop() {
         super.onStop();
-        System.out.println("On stop method");
         Favourites.save(this);
 
     }
@@ -81,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     protected void onRestart() {
-        System.out.println("loading and getting data method");
-        Toast.makeText(this, "loading and getting data", Toast.LENGTH_SHORT).show();
         Favourites.load(this);
         List<String> f;
         f = Favourites.getData();

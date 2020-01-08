@@ -46,7 +46,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     if(((CompoundButton) view).isChecked()){
                         System.out.println("Checked");
                         //add serial number to favourite list
-                        System.out.println("check method " + mSerialNumber.getText().toString());
                         Favourites.setData(mSerialNumber.getText().toString());
                        /* String nameProduct = mName.getText().toString();
                         String bestBefore = mBestBefore.getText().toString();
