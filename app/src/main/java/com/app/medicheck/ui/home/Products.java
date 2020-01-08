@@ -5,12 +5,13 @@ public class Products {
     String name;
     String ingredients;
     String bestBefore;
-    //String serialNumber;
+    String serialNumber;
 
-    public Products(String name, String ingredients, String bestBefore) {
+    public Products(String name, String ingredients, String bestBefore, String serialNumber) {
         this.name = name;
         this.ingredients = ingredients;
         this.bestBefore = bestBefore;
+        this.serialNumber = serialNumber;
     }
 
     public String getName() {
@@ -23,5 +24,13 @@ public class Products {
 
     public String getIngredients() {
         return ingredients;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

@@ -64,12 +64,33 @@
         android:layout_marginTop="15dp"
         android:textAlignment="textStart"
         android:layout_marginBottom="5dp" />
+
         <TextView
             android:id="@+id/bestBeforeDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/best_before"
             android:textColor="@color/colorTextBlack" />
+
+
+        <TextView
+            android:id="@+id/titleSerialNumberDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/serial_number"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="15dp"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/serialNumberDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/serial_number"
+            android:textColor="@color/colorTextBlack"
+            android:layout_marginBottom="5dp"/>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
