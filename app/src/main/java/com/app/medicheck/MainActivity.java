@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.app.medicheck.ui.notifications.Receiver;
 import com.app.medicheck.ui.profile.Favourites;
@@ -21,14 +20,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.io.Console;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Favourites fav = new Favourites();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onRestart() {
         Favourites.load(this);
-        List<String> f;
-        f = Favourites.getData();
-
-        for (String s : f) {
-            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        }
         super.onRestart();
     }
 
