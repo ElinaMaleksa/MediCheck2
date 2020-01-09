@@ -96,13 +96,8 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
         holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
         holder.mIngredients.setText(mProductsList.get(i).getIngredients());
         holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
+        holder.mCheckBoxStar.setChecked(true);
 
-        List <String> fav = Favourites.getData();
-        for (String s : fav) {
-            if (s.equals(mProductsList.get(i).getSerialNumber())) {
-                holder.mCheckBoxStar.setChecked(true);
-            }
-        }
     }
 
     @Override

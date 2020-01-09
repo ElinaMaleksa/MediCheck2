@@ -42,7 +42,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 @Override
                 public void onClick(View view) {
                     if(((CompoundButton) view).isChecked()){
-                        System.out.println("Checked");
                         //add serial number to favourite list
                         Favourites.setData(mSerialNumber.getText().toString());
                        /* String nameProduct = mName.getText().toString();
@@ -55,7 +54,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                         intent.putExtra("product_best_before", bestBefore);
                         //mCheckBoxStar.getContext().startActivity(intent);*/
                     } else {
-                        System.out.println("Un-Checked");
                         Favourites.removeItem(mSerialNumber.getText().toString());
 
                     }
@@ -80,6 +78,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             }
         });
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public HomeRecyclerViewAdapter(HomeFragment homeFragment, ArrayList<Products> products) {

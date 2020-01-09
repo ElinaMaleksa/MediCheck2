@@ -50,8 +50,11 @@ public class NotificationsViewAdapter extends RecyclerView.Adapter<Notifications
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
         holder.mName_N.setText(mContentNotificationsList.get(i).getNameNot());
         holder.mBestBefore_N.setText(mContentNotificationsList.get(i).getBestBeforeNot());
-        holder.mWarning_N.setText(mContentNotificationsList.get(i).getDaysDiff() + " days before expiration");
-
+        if (mContentNotificationsList.get(i).getDaysDiff() <= 0){
+            holder.mWarning_N.setText("Has expired");
+        }else {
+            holder.mWarning_N.setText("Will expire after "  +mContentNotificationsList.get(i).getDaysDiff() + " days");
+        }
     }
     @Override
     public int getItemCount() {

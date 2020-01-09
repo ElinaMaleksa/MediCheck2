@@ -62,10 +62,7 @@ public class NotificationsFragment extends Fragment {
     }
 
        public void createList(){
-      /*  mContentNotificationsArrayList.add(new ContentNotifications(1, "ingred Xyzal","05/05/2020", "7 dienas līdz termiņa beigām"));
-        mContentNotificationsArrayList.add(new ContentNotifications(2, "ingred Linex","01/10/2021", "7 dienas līdz termiņa beigām"));
-           mContentNotificationsArrayList.add(new ContentNotifications( 1, "Sinupret", "12/12/2020", "3 dienas līdz termiņa beigām"));
-*/
+
            ArrayList<Products> allProducts = HomeFragment.productList;
            List<String> fav = Favourites.getData();
            ContentNotifications cN;
@@ -90,9 +87,9 @@ public class NotificationsFragment extends Fragment {
 
                        long msDiff = cal.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
                        long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
-                       int expWarningTime = 105;
+                       int expWarningTime = 14;
 
-                       if (daysDiff < expWarningTime){
+                       if (daysDiff < expWarningTime ){
                            cN = new ContentNotifications(p.getId(), p.getName(), p.getBestBefore(), daysDiff);
                            mContentNotificationsArrayList.add(cN);
                        }
