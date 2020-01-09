@@ -21,6 +21,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.medicheck.R;
+<<<<<<< Updated upstream
+=======
+import com.app.medicheck.ui.notifications.ContentNotifications;
+import com.app.medicheck.ui.notifications.Receiver;
+import com.app.medicheck.ui.profile.Favourites;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+>>>>>>> Stashed changes
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+    BottomNavigationView mBottomNavigationView;
     private RecyclerView mRecyclerView;
     ArrayList<Products> mProductList;
     HomeRecyclerViewAdapter mRecyclerViewAdapter;
@@ -42,7 +50,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        mBottomNavigationView = root.findViewById(R.id.nav_view);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,6 +82,13 @@ public class HomeFragment extends Fragment {
                     showList();
                 }
                 else{
+                    mBottomNavigationView.setEnabled(false);
+                    mBottomNavigationView.setFocusable(false);
+                    mBottomNavigationView.setFocusableInTouchMode(false);
+                    mBottomNavigationView.setClickable(false);
+                    mBottomNavigationView.setContextClickable(false);
+                    mBottomNavigationView.setOnClickListener(null);
+                    
                     pullToRefresh.setRefreshing(true);
                     handler.postDelayed(refresh, 1000);
                 }
