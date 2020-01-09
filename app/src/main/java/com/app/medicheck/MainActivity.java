@@ -55,23 +55,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    protected void onDestroy() {
-//        System.out.println("On destroy method");
-//        Favourites.save(this);
-//        super.onDestroy();
-//    }
-
     protected void onStop() {
         super.onStop();
         Favourites.save(this);
 
     }
-
-//    protected void onPause() {
-//        System.out.println("On pause method");
-//        fav.save(this);
-//        super.onPause();
-//    }
 
     protected void onRestart() {
         Favourites.load(this);
@@ -96,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, 0);
         //set alarm time (after that much ms it will trigger notification)
         //System.currentTimeMillis()+10000
-        long timeInMillisec = calculateMilliseconds("2019-12-20").getTimeInMillis();
+        long timeInMilliSec = calculateMilliseconds("2019-12-20").getTimeInMillis();
 
-        alarms.set(AlarmManager.RTC_WAKEUP, timeInMillisec, operation) ;
+        alarms.set(AlarmManager.RTC_WAKEUP, timeInMilliSec, operation) ;
     }
 
     private void createNotificationChannel() {

@@ -48,15 +48,7 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
                         System.out.println("Checked");
                         //add serial number to favourite list
                         Favourites.setData(mSerialNumber.getText().toString());
-                       /* String nameProduct = mName.getText().toString();
-                        String bestBefore = mBestBefore.getText().toString();
-                        String ingredients = mIngredients.getText().toString();
 
-                        Intent intent = new Intent(mCheckBoxStar.getContext(), ProfileFragment.class);
-                        intent.putExtra("product_name", nameProduct);
-                        intent.putExtra("product_ingredients", ingredients);
-                        intent.putExtra("product_best_before", bestBefore);
-                        //mCheckBoxStar.getContext().startActivity(intent);*/
                     } else {
                         System.out.println("Un-Checked");
                         Favourites.removeItem(mSerialNumber.getText().toString());

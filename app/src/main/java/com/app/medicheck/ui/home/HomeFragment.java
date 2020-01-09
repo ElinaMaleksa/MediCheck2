@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     HomeRecyclerViewAdapter mRecyclerViewAdapter;
     public static final String TAG = "queueItem";
     RequestQueue queue;
-    ArrayList<Products> productList;
+    public static ArrayList<Products> productList;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
