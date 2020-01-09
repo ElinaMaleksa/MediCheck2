@@ -1,12 +1,14 @@
 package com.app.medicheck.ui.notifications;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.app.medicheck.R;
 import java.util.ArrayList;
+
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +50,11 @@ public class NotificationsViewAdapter extends RecyclerView.Adapter<Notifications
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
         holder.mName_N.setText(mContentNotificationsList.get(i).getNameNot());
         holder.mBestBefore_N.setText(mContentNotificationsList.get(i).getBestBeforeNot());
-        holder.mWarning_N.setText(mContentNotificationsList.get(i).getWarning());
+        if (mContentNotificationsList.get(i).getDaysDiff() <= 0){
+            holder.mWarning_N.setText("Has expired");
+        }else {
+            holder.mWarning_N.setText("Will expire after "  +mContentNotificationsList.get(i).getDaysDiff() + " days");
+        }
     }
     @Override
     public int getItemCount() {

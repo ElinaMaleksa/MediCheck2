@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
+import com.app.medicheck.ui.home.HomeFragment;
+import com.app.medicheck.ui.home.Products;
+import com.app.medicheck.ui.notifications.ContentNotifications;
 import com.app.medicheck.ui.notifications.Receiver;
 import com.app.medicheck.ui.profile.Favourites;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,12 +23,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    Favourites fav = new Favourites();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,20 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
         createNotificationChannel();
 
-        setAlarm();
+
 
         Favourites.load(this);
-        List<String> f;
-        f = Favourites.getData();
+
+        /*setAlarm();*/
 
     }
 
-
-//    protected void onDestroy() {
-//        System.out.println("On destroy method");
-//        Favourites.save(this);
-//        super.onDestroy();
-//    }
 
     protected void onStop() {
         super.onStop();
@@ -65,24 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    protected void onPause() {
-//        System.out.println("On pause method");
-//        fav.save(this);
-//        super.onPause();
-//    }
-
     protected void onRestart() {
         Favourites.load(this);
-        List<String> f;
-        f = Favourites.getData();
-
-        for (String s : f) {
-            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        }
         super.onRestart();
     }
 
-    public void setAlarm(){
+    /*public void setAlarm(){
         AlarmManager alarms = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
         Receiver receiver = new Receiver();
@@ -90,15 +75,52 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         Intent intent = new Intent("ALARM_ACTION");
-        intent.putExtra("param", "My scheduled action");
+        //intent.putExtra("param", "My scheduled action");
         PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, 0);
         //set alarm time (after that much ms it will trigger notification)
         //System.currentTimeMillis()+10000
-        long timeInMillisec = calculateMilliseconds("2019-12-20").getTimeInMillis();
 
-        alarms.set(AlarmManager.RTC_WAKEUP, timeInMillisec, operation) ;
-    }
+        ArrayList<Products> allProducts = HomeFragment.productList;
+        List<String> fav = Favourites.getData();
+        ContentNotifications cN;
 
+        for (Products p : allProducts) {
+            for (String s : fav) {
+                if (p.getSerialNumber().equals(s)) {
+
+                    String[] dateComponents = p.getBestBefore().split("-");
+                    int year = Integer.parseInt(dateComponents[0]);
+                    int month = Integer.parseInt(dateComponents[1]);
+                    int day = Integer.parseInt(dateComponents[2]);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(java.util.Calendar.YEAR, year);
+                    cal.set(java.util.Calendar.MONTH, month - 1);
+                    cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+                    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                    cal.set(java.util.Calendar.MINUTE, 0);
+                    cal.set(java.util.Calendar.SECOND, 0);
+                    cal.set(java.util.Calendar.MILLISECOND, 0);
+
+                    long msDiff = cal.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+                    long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
+                    int expWarningTime = 105;
+
+                    if (daysDiff < expWarningTime) {
+                        cN = new ContentNotifications(p.getId(), p.getName(), p.getBestBefore(), daysDiff);
+                        long timeInMilliSec = calculateMilliseconds(cN.getBestBeforeNot()).getTimeInMillis();
+
+                        intent.putExtra("name", cN.getNameNot());
+                        intent.putExtra("bestBefore", cN.getBestBeforeNot());
+                        alarms.set(AlarmManager.RTC_WAKEUP, 60000, operation) ;
+                    }
+
+
+                }
+            }
+        }
+
+    }*/
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -115,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Calendar calculateMilliseconds(String expDate){
+   /* private Calendar calculateMilliseconds(String expDate){
         String [] dateComponents = expDate.split("-");
         int year = Integer.parseInt(dateComponents[0]);
         int month = Integer.parseInt(dateComponents[1]);
@@ -132,5 +154,5 @@ public class MainActivity extends AppCompatActivity {
 
 
         return cal;
-    }
+    }*/
 }

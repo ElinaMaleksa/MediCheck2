@@ -4,13 +4,15 @@ public class ContentNotifications {
     int idNot;
     String nameNot;
     String bestBeforeNot;
-    String warning;
+    long daysDiff;
 
-    public ContentNotifications(int idNot, String nameNot,String bestBeforeNot, String warning) {
+
+
+    public ContentNotifications(int idNot, String nameNot ,String bestBeforeNot, long daysDiff) {
         this.idNot = idNot;
         this.nameNot = nameNot;
         this.bestBeforeNot = bestBeforeNot;
-        this.warning = warning;
+        this.daysDiff = daysDiff;
     }
 
     public int getIdNot() {
@@ -25,7 +27,7 @@ public class ContentNotifications {
         return bestBeforeNot;
     }
 
-    public String getWarning() {
-        return warning;
+    public long getDaysDiff() {
+        return daysDiff;
     }
 }

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +19,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.medicheck.R;
+import com.app.medicheck.ui.home.HomeFragment;
+import com.app.medicheck.ui.home.HomeRecyclerViewAdapter;
 import com.app.medicheck.ui.home.Products;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -56,7 +65,7 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
-    public void createList(){
+/*    public void createList(){
         mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
         mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
         mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
@@ -79,7 +88,27 @@ public class ProfileFragment extends Fragment {
         mFavouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(ProfileFragment.this, mProductsArrayList);
         mFavouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(ProfileFragment.this, mProductsArrayList);
         mRecyclerView.setAdapter(mFavouritesRecyclerViewAdapter);
+    }*/
+
+    public void createList() {
+
+        ArrayList<Products> favProducts = new ArrayList<>();
+        ArrayList<Products> allProducts = HomeFragment.productList;
+        List<String> fav = Favourites.getData();
+
+        for (Products p : allProducts) {
+            for (String s: fav){
+                if (p.getSerialNumber().equals(s)) {
+                    favProducts.add(p);
+                }
+            }
+        }
+
+
+        mFavouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(ProfileFragment.this, favProducts);
+        mRecyclerView.setAdapter(mFavouritesRecyclerViewAdapter);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

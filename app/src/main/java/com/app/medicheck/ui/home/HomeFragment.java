@@ -1,5 +1,10 @@
 package com.app.medicheck.ui.home;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,19 +26,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.medicheck.R;
-<<<<<<< Updated upstream
-=======
+
 import com.app.medicheck.ui.notifications.ContentNotifications;
 import com.app.medicheck.ui.notifications.Receiver;
 import com.app.medicheck.ui.profile.Favourites;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
->>>>>>> Stashed changes
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
     BottomNavigationView mBottomNavigationView;
@@ -42,7 +49,7 @@ public class HomeFragment extends Fragment {
     HomeRecyclerViewAdapter mRecyclerViewAdapter;
     public static final String TAG = "queueItem";
     RequestQueue queue;
-    ArrayList<Products> productList;
+    public static ArrayList<Products> productList;
 
     Handler handler = new Handler();
     Runnable refresh;
@@ -70,6 +77,7 @@ public class HomeFragment extends Fragment {
                 }
                 createList();
                 pullToRefresh.setRefreshing(false);
+
             }
         });
 
@@ -114,6 +122,7 @@ public class HomeFragment extends Fragment {
 
 //                        Log.d("", "onResponse: " + response);
                         productList = parseJsonToProductList(response);
+                        setAlarm();
                         urlRequestDone = true;
 
                     }
@@ -168,5 +177,82 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
         return  pL;
+    }
+
+        public void setAlarm(){
+        AlarmManager alarms = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
+        Receiver receiver = new Receiver();
+        IntentFilter filter = new IntentFilter("ALARM_ACTION");
+        getActivity().registerReceiver(receiver, filter);
+
+        Intent intent = new Intent("ALARM_ACTION");
+        //intent.putExtra("param", "My scheduled action");
+
+        //set alarm time (after that much ms it will trigger notification)
+        //System.currentTimeMillis()+10000
+
+        ArrayList<Products> allProducts = HomeFragment.productList;
+        List<String> fav = Favourites.getData();
+        ContentNotifications cN;
+
+        for (Products p : allProducts) {
+            for (String s : fav) {
+                if (p.getSerialNumber().equals(s)) {
+
+                    String[] dateComponents = p.getBestBefore().split("-");
+                    int year = Integer.parseInt(dateComponents[0]);
+                    int month = Integer.parseInt(dateComponents[1]);
+                    int day = Integer.parseInt(dateComponents[2]);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(java.util.Calendar.YEAR, year);
+                    cal.set(java.util.Calendar.MONTH, month - 1);
+                    cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+                    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                    cal.set(java.util.Calendar.MINUTE, 0);
+                    cal.set(java.util.Calendar.SECOND, 0);
+                    cal.set(java.util.Calendar.MILLISECOND, 0);
+
+                    long msDiff = cal.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+                    long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
+                    int expWarningTime = 14;
+
+                    if (daysDiff < expWarningTime) {
+                        cN = new ContentNotifications(p.getId(), p.getName(), p.getBestBefore(), daysDiff);
+                        long timeInMilliSec = calculateMilliseconds(cN.getBestBeforeNot()).getTimeInMillis();
+
+                        intent.putExtra("title", "Expiration date soon");
+                        intent.putExtra("name", cN.getNameNot());
+                        intent.putExtra("days", Long.toString(daysDiff));
+                        intent.putExtra("id", Integer.toString(cN.getIdNot()));
+                        PendingIntent operation = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
+                        alarms.set(AlarmManager.RTC_WAKEUP, 5000, operation) ;
+                    }
+
+
+                }
+            }
+        }
+
+    }
+
+     private Calendar calculateMilliseconds(String expDate){
+        String [] dateComponents = expDate.split("-");
+        int year = Integer.parseInt(dateComponents[0]);
+        int month = Integer.parseInt(dateComponents[1]);
+        int day = Integer.parseInt(dateComponents[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month - 1);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 12);
+        cal.set(Calendar.MINUTE, 23);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+
+        return cal;
     }
 }

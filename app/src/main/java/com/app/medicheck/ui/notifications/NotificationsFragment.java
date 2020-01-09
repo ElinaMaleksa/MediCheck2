@@ -17,9 +17,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.app.medicheck.R;
+import com.app.medicheck.ui.home.HomeFragment;
+import com.app.medicheck.ui.home.Products;
+import com.app.medicheck.ui.profile.Favourites;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class NotificationsFragment extends Fragment {
 
@@ -57,13 +63,45 @@ public class NotificationsFragment extends Fragment {
 
        public void createList(){
 
-        mContentNotificationsArrayList.add(new ContentNotifications(1, "ingred Xyzal","05/05/2020", "7 dienas līdz termiņa beigām"));
-        mContentNotificationsArrayList.add(new ContentNotifications(2, "ingred Linex","01/10/2021", "7 dienas līdz termiņa beigām"));
-           mContentNotificationsArrayList.add(new ContentNotifications( 1, "Sinupret", "12/12/2020", "3 dienas līdz termiņa beigām"));
+           ArrayList<Products> allProducts = HomeFragment.productList;
+           List<String> fav = Favourites.getData();
+           ContentNotifications cN;
+
+           for (Products p : allProducts) {
+               for (String s: fav){
+                   if (p.getSerialNumber().equals(s)) {
+
+                       String [] dateComponents = p.getBestBefore().split("-");
+                       int year = Integer.parseInt(dateComponents[0]);
+                       int month = Integer.parseInt(dateComponents[1]);
+                       int day = Integer.parseInt(dateComponents[2]);
+
+                       Calendar cal = Calendar.getInstance();
+                       cal.set(java.util.Calendar.YEAR, year);
+                       cal.set(java.util.Calendar.MONTH, month - 1);
+                       cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+                       cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                       cal.set(java.util.Calendar.MINUTE, 0);
+                       cal.set(java.util.Calendar.SECOND, 0);
+                       cal.set(java.util.Calendar.MILLISECOND, 0);
+
+                       long msDiff = cal.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+                       long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
+                       int expWarningTime = 14;
+
+                       if (daysDiff < expWarningTime ){
+                           cN = new ContentNotifications(p.getId(), p.getName(), p.getBestBefore(), daysDiff);
+                           mContentNotificationsArrayList.add(cN);
+                       }
+
+
+                   }
+               }
+           }
 
         mNotificationsViewAdapter = new NotificationsViewAdapter(NotificationsFragment.this, mContentNotificationsArrayList);
-                   mNotificationsViewAdapter = new NotificationsViewAdapter(NotificationsFragment.this, mContentNotificationsArrayList);
-           mRecyclerView.setAdapter(mNotificationsViewAdapter);
+        //mNotificationsViewAdapter = new NotificationsViewAdapter(NotificationsFragment.this, mContentNotificationsArrayList);
+        mRecyclerView.setAdapter(mNotificationsViewAdapter);
        }
     public void onResume() {
         super.onResume();
