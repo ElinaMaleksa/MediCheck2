@@ -34,4 +34,7 @@ public class Products {
         return serialNumber;
     }
 
+    public int getId() {
+        return id;
+    }
 }

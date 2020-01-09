@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
         setAlarm();
 
         Favourites.load(this);
-        List<String> f;
-        f = Favourites.getData();
 
     }
 
