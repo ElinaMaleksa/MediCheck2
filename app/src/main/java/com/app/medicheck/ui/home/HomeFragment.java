@@ -25,12 +25,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.app.medicheck.MainActivity;
 import com.app.medicheck.R;
 
 import com.app.medicheck.ui.notifications.ContentNotifications;
 import com.app.medicheck.ui.notifications.Receiver;
 import com.app.medicheck.ui.profile.Favourites;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,13 +39,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
-    BottomNavigationView mBottomNavigationView;
     private RecyclerView mRecyclerView;
-    ArrayList<Products> mProductList;
     HomeRecyclerViewAdapter mRecyclerViewAdapter;
     public static final String TAG = "queueItem";
     RequestQueue queue;
@@ -55,14 +52,13 @@ public class HomeFragment extends Fragment {
     Runnable refresh;
     boolean urlRequestDone = false;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        mBottomNavigationView = root.findViewById(R.id.nav_view);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mProductList = new ArrayList<>();
         createList();
 
         final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.pullToRefresh);
@@ -71,32 +67,24 @@ public class HomeFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!mProductList.isEmpty()){
-                    //update list
-                    mProductList.clear();
-                }
                 createList();
                 pullToRefresh.setRefreshing(false);
-
             }
         });
 
         //automatically load the list
         refresh = new Runnable() {
             public void run() {
-                if (urlRequestDone){
+
+                if (urlRequestDone || mRecyclerViewAdapter.getItemCount()>0){
                     pullToRefresh.setRefreshing(false);
                     handler.removeCallbacks(refresh);
                     showList();
+                    hideBottomBar(false);
+                    setAlarm();
                 }
                 else{
-                    mBottomNavigationView.setEnabled(false);
-                    mBottomNavigationView.setFocusable(false);
-                    mBottomNavigationView.setFocusableInTouchMode(false);
-                    mBottomNavigationView.setClickable(false);
-                    mBottomNavigationView.setContextClickable(false);
-                    mBottomNavigationView.setOnClickListener(null);
-                    
+                    hideBottomBar(true);
                     pullToRefresh.setRefreshing(true);
                     handler.postDelayed(refresh, 1000);
                 }
@@ -105,6 +93,10 @@ public class HomeFragment extends Fragment {
         handler.post(refresh);
 
         return root;
+    }
+
+    public void hideBottomBar(boolean isHidden){
+        MainActivity.navView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
     public void showList(){
@@ -120,9 +112,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-//                        Log.d("", "onResponse: " + response);
                         productList = parseJsonToProductList(response);
-                        setAlarm();
                         urlRequestDone = true;
 
                     }
