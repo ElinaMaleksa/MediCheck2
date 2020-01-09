@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +28,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.android.volley.toolbox.Volley.*;
-
 public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     ArrayList<Products> mProductList;
@@ -39,6 +35,10 @@ public class HomeFragment extends Fragment {
     public static final String TAG = "queueItem";
     RequestQueue queue;
     ArrayList<Products> productList;
+
+    Handler handler = new Handler();
+    Runnable refresh;
+    boolean urlRequestDone = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -48,10 +48,11 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mProductList = new ArrayList<>();
-        //createList();
+        createList();
 
         final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.pullToRefresh);
 
+        //refreshing manually
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -64,21 +65,28 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        pullToRefresh.post(new Runnable() {
-            @Override
+        //automatically load the list
+        refresh = new Runnable() {
             public void run() {
-                if (mProductList.isEmpty()){
-                    pullToRefresh.setRefreshing(true);
-
-                    //createList();
+                if (urlRequestDone){
+                    pullToRefresh.setRefreshing(false);
+                    handler.removeCallbacks(refresh);
+                    showList();
                 }
-
-                /*createList();
-               pullToRefresh.setRefreshing(false);*/
+                else{
+                    pullToRefresh.setRefreshing(true);
+                    handler.postDelayed(refresh, 1000);
+                }
             }
+        };
+        handler.post(refresh);
 
-        });
         return root;
+    }
+
+    public void showList(){
+        mRecyclerViewAdapter = new HomeRecyclerViewAdapter(HomeFragment.this, productList);
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
     }
 
     public void createList() {
@@ -91,6 +99,7 @@ public class HomeFragment extends Fragment {
 
 //                        Log.d("", "onResponse: " + response);
                         productList = parseJsonToProductList(response);
+                        urlRequestDone = true;
 
                     }
                 }, new Response.ErrorListener() {
@@ -102,8 +111,7 @@ public class HomeFragment extends Fragment {
         stringRequest.setTag(TAG);
         queue.add(stringRequest);
 
-        mRecyclerViewAdapter = new HomeRecyclerViewAdapter(HomeFragment.this, productList);
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+      showList();
     }
 
     public void onResume() {
@@ -113,7 +121,6 @@ public class HomeFragment extends Fragment {
             activity.getSupportActionBar().hide();
         }
     }
-
 
     @Override
     public void onStop() {
@@ -131,12 +138,6 @@ public class HomeFragment extends Fragment {
             JSONArray jsonArray = wholeJson.getJSONArray("records");
             for (int i = 0; i<jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                Log.d("",""+jsonObject.getInt("id") );
-//                Log.d("",""+jsonObject.getString("name") );
-//                Log.d("",""+jsonObject.getString("category") );
-//                Log.d("",""+jsonObject.getString("ingredients") );
-//                Log.d("",""+jsonObject.getString("best_before") );
-//                Log.d("",""+jsonObject.getString("serial_number") );
 
                 pL.add(new Products(
                         jsonObject.getInt("id"),
@@ -146,7 +147,6 @@ public class HomeFragment extends Fragment {
                         jsonObject.getString("best_before"),
                         jsonObject.getString("serial_number")
                 ));
-
             }
         }
         catch (JSONException e){
