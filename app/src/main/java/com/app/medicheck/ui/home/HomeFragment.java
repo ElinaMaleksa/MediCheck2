@@ -6,12 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,8 +40,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.android.volley.toolbox.Volley.*;
-
 public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     ArrayList<Products> mProductList;
@@ -50,6 +47,10 @@ public class HomeFragment extends Fragment {
     public static final String TAG = "queueItem";
     RequestQueue queue;
     public static ArrayList<Products> productList;
+
+    Handler handler = new Handler();
+    Runnable refresh;
+    boolean urlRequestDone = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -62,6 +63,8 @@ public class HomeFragment extends Fragment {
         createList();
 
         final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.pullToRefresh);
+
+        //refreshing manually
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -75,9 +78,28 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+        //automatically load the list
+        refresh = new Runnable() {
+            public void run() {
+                if (urlRequestDone){
+                    pullToRefresh.setRefreshing(false);
+                    handler.removeCallbacks(refresh);
+                    showList();
+                }
+                else{
+                    pullToRefresh.setRefreshing(true);
+                    handler.postDelayed(refresh, 1000);
+                }
+            }
+        };
+        handler.post(refresh);
 
         return root;
+    }
+
+    public void showList(){
+        mRecyclerViewAdapter = new HomeRecyclerViewAdapter(HomeFragment.this, productList);
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
     }
 
     public void createList() {
@@ -91,40 +113,21 @@ public class HomeFragment extends Fragment {
 //                        Log.d("", "onResponse: " + response);
                         productList = parseJsonToProductList(response);
                         setAlarm();
+                        urlRequestDone = true;
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("", "onErrorResponse: That didn't work!");
-
             }
         });
         stringRequest.setTag(TAG);
         queue.add(stringRequest);
 
-//        mProductList.add(new Products("Sinupret", "1 coated tablet contains:\n\n" +
-//                "Active substance:\n" +
-//                "160.00 mg dry extract (3-6:1) of gentian root, primula flowers, sorrel herb,\n" +
-//                "elder flowers, verbena herb (1:3:3:3:3) 1. Extracting agent: ethanol 51%\n\n" +
-//                "The other ingredients are:\n" +
-//                "Spray-dried gum arabic, calcium carbonate, carnauba wax, cellulose\n" +
-//                "powder, microcrystalline cellulose, chlorophyll powder 25% (E140),\n" +
-//                "dextrin (from corn starch), glucose syrup, hypromellose, indigocarmine,\n" +
-//                "aluminium salt (E 132), magnesium stearate (Ph.Eur.) [vegetable],\n" +
-//                "maltodextrin, riboflavin (E 101), highly dispersed silicon dioxide, highly\n" +
-//                "dispersed hydrophobic silicon dioxide, stearic acid, sucrose, talc, titanium\n" +
-//                "dioxide (E 171).\n\n" +
-//                "Note for diabetics:\n" +
-//                "One coated tablet contains on average 0.026 carbohydrate exchange units\n" +
-//                "(CEU). Sinupret extract is gluten-free and lactose-free.","12/12/2020"));
-//        mProductList.add(new Products("Xyzal", "ingred Xyzal","05/05/2020"));
-//        mProductList.add(new Products("Linex", "ingred Linex","01/10/2021"));
-        //add products to list
-        //mRecyclerViewAdapter = new RecyclerViewAdapter(HomeFragment.this, mProductList);
-        mRecyclerViewAdapter = new HomeRecyclerViewAdapter(HomeFragment.this, productList);
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+      showList();
     }
+
     public void onResume() {
         super.onResume();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -132,7 +135,6 @@ public class HomeFragment extends Fragment {
             activity.getSupportActionBar().hide();
         }
     }
-
 
     @Override
     public void onStop() {
@@ -150,12 +152,6 @@ public class HomeFragment extends Fragment {
             JSONArray jsonArray = wholeJson.getJSONArray("records");
             for (int i = 0; i<jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                Log.d("",""+jsonObject.getInt("id") );
-//                Log.d("",""+jsonObject.getString("name") );
-//                Log.d("",""+jsonObject.getString("category") );
-//                Log.d("",""+jsonObject.getString("ingredients") );
-//                Log.d("",""+jsonObject.getString("best_before") );
-//                Log.d("",""+jsonObject.getString("serial_number") );
 
                 pL.add(new Products(
                         jsonObject.getInt("id"),
@@ -165,7 +161,6 @@ public class HomeFragment extends Fragment {
                         jsonObject.getString("best_before"),
                         jsonObject.getString("serial_number")
                 ));
-
             }
         }
         catch (JSONException e){
