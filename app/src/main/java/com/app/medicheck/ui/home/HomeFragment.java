@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,9 @@ import java.util.concurrent.TimeUnit;
 public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     HomeRecyclerViewAdapter mRecyclerViewAdapter;
+    SwipeRefreshLayout pullToRefresh;
+    TextView mEmptyViewHome;
+
     public static final String TAG = "queueItem";
     RequestQueue queue;
     public static ArrayList<Products> productList;
@@ -52,16 +56,16 @@ public class HomeFragment extends Fragment {
     Runnable refresh;
     boolean urlRequestDone = false;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        mEmptyViewHome= root.findViewById(R.id.empty_view_home);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        createList();
+        pullToRefresh = root.findViewById(R.id.pullToRefresh);
 
-        final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.pullToRefresh);
+        createList();
 
         //refreshing manually
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -75,15 +79,16 @@ public class HomeFragment extends Fragment {
         //automatically load the list
         refresh = new Runnable() {
             public void run() {
-
                 if (urlRequestDone || mRecyclerViewAdapter.getItemCount()>0){
                     pullToRefresh.setRefreshing(false);
                     handler.removeCallbacks(refresh);
                     showList();
                     hideBottomBar(false);
                     setAlarm();
+                    changeViewElementVisibility();
                 }
                 else{
+                    changeViewElementVisibility();
                     hideBottomBar(true);
                     pullToRefresh.setRefreshing(true);
                     handler.postDelayed(refresh, 1000);
@@ -95,6 +100,16 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    public void changeViewElementVisibility(){
+        if (mRecyclerViewAdapter.getItemCount()>0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyViewHome.setVisibility(View.GONE);
+        }
+        else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyViewHome.setVisibility(View.VISIBLE);
+        }
+    }
     public void hideBottomBar(boolean isHidden){
         MainActivity.navView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
@@ -111,10 +126,8 @@ public class HomeFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         productList = parseJsonToProductList(response);
                         urlRequestDone = true;
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -177,10 +190,6 @@ public class HomeFragment extends Fragment {
         getActivity().registerReceiver(receiver, filter);
 
         Intent intent = new Intent("ALARM_ACTION");
-        //intent.putExtra("param", "My scheduled action");
-
-        //set alarm time (after that much ms it will trigger notification)
-        //System.currentTimeMillis()+10000
 
         ArrayList<Products> allProducts = HomeFragment.productList;
         List<String> fav = Favourites.getData();
@@ -219,12 +228,9 @@ public class HomeFragment extends Fragment {
                         PendingIntent operation = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
                         alarms.set(AlarmManager.RTC_WAKEUP, 5000, operation) ;
                     }
-
-
                 }
             }
         }
-
     }
 
      private Calendar calculateMilliseconds(String expDate){
@@ -241,7 +247,6 @@ public class HomeFragment extends Fragment {
         cal.set(Calendar.MINUTE, 23);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-
 
         return cal;
     }

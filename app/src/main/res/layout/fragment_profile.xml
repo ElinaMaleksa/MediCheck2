@@ -31,5 +31,15 @@
         android:layout_height="match_parent"
         android:id="@+id/recycler_view_profile"
         android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/empty_view_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/no_data_available_profile"
+            android:padding="20dp"
+            android:textSize="15sp"/>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

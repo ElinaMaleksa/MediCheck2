@@ -27,4 +27,7 @@
     <string name="warning_to_expire">WARNING</string>
     <string name="title_notif_list">NOTIFICATIONS</string>
     <string name="title_favourite_items">FAVOURITE ITEMS</string>
+    <string name="no_data_available_notifications">You have no products that will expire in the next two weeks</string>
+    <string name="no_data_available_profile">Your favourite list is empty</string>
+    <string name="no_data_available_home">Product list is on the way</string>
 </resources>

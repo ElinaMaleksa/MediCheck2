@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -30,21 +31,30 @@ import java.util.concurrent.TimeUnit;
 public class NotificationsFragment extends Fragment {
 
         private RecyclerView mRecyclerView;
-
         NotificationsViewAdapter mNotificationsViewAdapter;
-
         ArrayList<ContentNotifications> mContentNotificationsArrayList;
+        TextView mEmptyViewNotif;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        mEmptyViewNotif = root.findViewById(R.id.empty_view_notifications);
         mRecyclerView = root.findViewById(R.id.recycler_view_notifications);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mContentNotificationsArrayList = new ArrayList<>();
         createList();
+
+        if (mNotificationsViewAdapter.getItemCount()>0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyViewNotif.setVisibility(View.GONE);
+        }
+        else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyViewNotif.setVisibility(View.VISIBLE);
+        }
 
         final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.pullToRefresh_notifications);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -93,14 +103,11 @@ public class NotificationsFragment extends Fragment {
                            cN = new ContentNotifications(p.getId(), p.getName(), p.getBestBefore(), daysDiff);
                            mContentNotificationsArrayList.add(cN);
                        }
-
-
                    }
                }
            }
 
         mNotificationsViewAdapter = new NotificationsViewAdapter(NotificationsFragment.this, mContentNotificationsArrayList);
-        //mNotificationsViewAdapter = new NotificationsViewAdapter(NotificationsFragment.this, mContentNotificationsArrayList);
         mRecyclerView.setAdapter(mNotificationsViewAdapter);
        }
     public void onResume() {
@@ -110,6 +117,4 @@ public class NotificationsFragment extends Fragment {
             activity.getSupportActionBar().hide();
         }
     }
-
-
 }
