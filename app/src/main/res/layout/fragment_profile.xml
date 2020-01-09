@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pullToRefresh_profile"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        android:id="@+id/fragment_profile_toolbar"
-        layout="@layout/fragment_profile_toolbar"
-        tools:layout_editor_absoluteX="-157dp"
-        tools:layout_editor_absoluteY="95dp"></include>
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <include
+            android:id="@+id/fragment_profile_toolbar"
+            layout="@layout/fragment_toolbar"
+            tools:layout_editor_absoluteX="-157dp"
+            tools:layout_editor_absoluteY="95dp" />
         <TextView
             android:id="@+id/text_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/title_favourite_items"
             android:textAlignment="center"
             android:textSize="20sp"
@@ -35,4 +32,4 @@
         android:id="@+id/recycler_view_profile"
         android:padding="5dp"/>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

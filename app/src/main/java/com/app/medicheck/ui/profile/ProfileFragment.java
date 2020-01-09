@@ -1,53 +1,94 @@
 package com.app.medicheck.ui.profile;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.app.medicheck.MainActivity;
 import com.app.medicheck.R;
-
-import java.net.URI;
+import com.app.medicheck.ui.home.Products;
+import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
+
+ private RecyclerView mRecyclerView;
+
+        FavouritesRecyclerViewAdapter mFavouritesRecyclerViewAdapter;
+
+        ArrayList<Products> mProductsArrayList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        
+        mRecyclerView = root.findViewById(R.id.recycler_view_profile);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mProductsArrayList = new ArrayList<>();
+        createList();
+
+        final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.pullToRefresh_profile);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (!mProductsArrayList.isEmpty()){
+                    //update list
+                    mProductsArrayList.clear();
+                }
+                createList();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         return root;
     }
 
+    public void createList(){
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+        mProductsArrayList.add(new Products(1, "sinupret", "med", "ingred Sinupret","05/05/2020", "011"));
+        mProductsArrayList.add(new Products(2, "Linex", "med", "ingred Linex","01/10/2021", "111"));
+
+        mFavouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(ProfileFragment.this, mProductsArrayList);
+        mFavouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(ProfileFragment.this, mProductsArrayList);
+        mRecyclerView.setAdapter(mFavouritesRecyclerViewAdapter);
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null && activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().hide();
+            //activity.getSupportActionBar().hide();
             createActionBar();
         }
     }
-
 
     public void createActionBar () {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -56,8 +97,6 @@ public class ProfileFragment extends Fragment {
         profileToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
-
                 switch (item.getItemId()){
                     case R.id.profile_toolbar_item_about:
                         buildAboutDialog();

@@ -9,12 +9,13 @@ public class Products {
     int id;
 
     public Products(int id, String name,String category, String ingredients, String bestBefore,String serialNumber) {
+        this.id = id;
         this.name = name;
+        this.category = category;
         this.ingredients = ingredients;
         this.bestBefore = bestBefore;
-        this.category = category;
         this.serialNumber = serialNumber;
-        this.id = id;
+
     }
 
     public String getName() {
