@@ -22,17 +22,9 @@ public class Favourites {
         Set<String> hashSet = new HashSet<>();
         for(String s : set){
             hashSet = (Set) allPrefs.get(s);
-
         }
         assert hashSet != null;
         data.addAll(hashSet);
-
-        /*for(Map.Entry<String,?> entry : keys.entrySet()){
-
-
-            data.add(entry.getValue().toString());
-            System.out.println("Load method " + entry.getValue().toString());
-        }*/
     }
 
     public static void save(Context context) {
@@ -43,13 +35,6 @@ public class Favourites {
         Set<String> set = new HashSet<String>(data) {
         };
         editor.putStringSet("fav", set);
-/*        Iterator it = data.iterator();
-        int i = 0;
-        while (it.hasNext()){
-            editor.putString("" + i, it.next().toString());
-            System.out.println("Save method " + it.next().toString());
-            i++;
-        }*/
         editor.commit();
     }
 

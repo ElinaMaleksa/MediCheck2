@@ -14,14 +14,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if (getSupportActionBar() != null) {
            //getSupportActionBar().hide();
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-
 
         setContentView(R.layout.activity_product_details);
 
@@ -41,8 +39,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         serialNumberProduct = intent.getStringExtra("product_serial_number");
         TextView serialNumberField = findViewById(R.id.serialNumberDetails);
         serialNumberField.setText(serialNumberProduct);
-
-
     }
 
     @Override

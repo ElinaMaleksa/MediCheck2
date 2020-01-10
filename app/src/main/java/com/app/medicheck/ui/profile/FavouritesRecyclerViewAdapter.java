@@ -1,6 +1,5 @@
 package com.app.medicheck.ui.profile;
 
-
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,20 +9,18 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.app.medicheck.R;
 import com.app.medicheck.ui.home.ProductDetailsActivity;
 import com.app.medicheck.ui.home.Products;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<FavouritesRecyclerViewAdapter.RecyclerViewHolder>{
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<FavouritesRecyclerViewAdapter.RecyclerViewHolder> {
     ProfileFragment mProfileFragment;
     ArrayList<Products> mProductsList;
-    List<String> myFav;
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -44,7 +41,7 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
             mCheckBoxStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(((CompoundButton) view).isChecked()){
+                    if (((CompoundButton) view).isChecked()) {
                         System.out.println("Checked");
                         //add serial number to favourite list
                         Favourites.setData(mSerialNumber.getText().toString());

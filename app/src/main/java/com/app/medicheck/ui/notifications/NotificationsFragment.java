@@ -72,7 +72,6 @@ public class NotificationsFragment extends Fragment {
     }
 
        public void createList(){
-
            ArrayList<Products> allProducts = HomeFragment.productList;
            List<String> fav = Favourites.getData();
            ContentNotifications cN;

@@ -99,7 +99,6 @@ public class ProfileFragment extends Fragment {
     public void createActionBar() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         androidx.appcompat.widget.Toolbar profileToolbar = activity.findViewById(R.id.fragment_profile_toolbar);
-        //activity.setSupportActionBar(profileToolbar);
         profileToolbar.inflateMenu(R.menu.profile_toolbar_menu);
         profileToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

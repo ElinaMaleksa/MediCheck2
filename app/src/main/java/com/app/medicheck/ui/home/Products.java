@@ -15,7 +15,6 @@ public class Products {
         this.ingredients = ingredients;
         this.bestBefore = bestBefore;
         this.serialNumber = serialNumber;
-
     }
 
     public String getName() {

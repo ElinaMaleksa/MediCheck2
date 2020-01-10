@@ -13,14 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,7 +22,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.medicheck.MainActivity;
 import com.app.medicheck.R;
-
 import com.app.medicheck.ui.notifications.ContentNotifications;
 import com.app.medicheck.ui.notifications.Receiver;
 import com.app.medicheck.ui.profile.Favourites;
@@ -43,6 +34,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
@@ -60,7 +58,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        mEmptyViewHome= root.findViewById(R.id.empty_view_home);
+        mEmptyViewHome = root.findViewById(R.id.empty_view_home);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -81,7 +79,7 @@ public class HomeFragment extends Fragment {
         //automatically load the list
         refresh = new Runnable() {
             public void run() {
-                if (urlRequestDone || mRecyclerViewAdapter.getItemCount()>0){
+                if (urlRequestDone || mRecyclerViewAdapter.getItemCount() > 0) {
                     pullToRefresh.setRefreshing(false);
                     handler.removeCallbacks(refresh);
                     showList();
@@ -89,13 +87,11 @@ public class HomeFragment extends Fragment {
                     setAlarm();
                     mEmptyViewHome.setText(getString((R.string.no_data_available_home)));
                     changeViewElementVisibility();
-                }
-                else{
+                } else {
                     changeViewElementVisibility();
-                    if (!isNetworkConnected()){
+                    if (!isNetworkConnected()) {
                         mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
-                    }
-                    else{
+                    } else {
                         hideBottomBar(true);
                         pullToRefresh.setRefreshing(true);
                         handler.postDelayed(refresh, 1000);
@@ -114,28 +110,28 @@ public class HomeFragment extends Fragment {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
-    public void changeViewElementVisibility(){
-        if (mRecyclerViewAdapter.getItemCount()>0) {
+    public void changeViewElementVisibility() {
+        if (mRecyclerViewAdapter.getItemCount() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mEmptyViewHome.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mRecyclerView.setVisibility(View.GONE);
             mEmptyViewHome.setVisibility(View.VISIBLE);
         }
     }
-    public void hideBottomBar(boolean isHidden){
+
+    public void hideBottomBar(boolean isHidden) {
         MainActivity.navView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
-    public void showList(){
+    public void showList() {
         mRecyclerViewAdapter = new HomeRecyclerViewAdapter(HomeFragment.this, productList);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
     }
 
     public void createList() {
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url ="https://ebiznessvia.000webhostapp.com/api/products/read.php";
+        String url = "https://ebiznessvia.000webhostapp.com/api/products/read.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -146,11 +142,10 @@ public class HomeFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(isNetworkConnected()){
+                if (isNetworkConnected()) {
                     createList();
                     mEmptyViewHome.setText(getString((R.string.database_con_problem)));
-                }
-                else{
+                } else {
                     mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
                 }
                 Log.d("", "onErrorResponse: That didn't work!");
@@ -159,7 +154,7 @@ public class HomeFragment extends Fragment {
         stringRequest.setTag(TAG);
         queue.add(stringRequest);
 
-      showList();
+        showList();
     }
 
     public void onResume() {
@@ -178,13 +173,13 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    ArrayList<Products> parseJsonToProductList(String json){
+    ArrayList<Products> parseJsonToProductList(String json) {
 
         ArrayList<Products> pL = new ArrayList<>();
         try {
             JSONObject wholeJson = new JSONObject(json);
             JSONArray jsonArray = wholeJson.getJSONArray("records");
-            for (int i = 0; i<jsonArray.length(); i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 pL.add(new Products(
@@ -196,14 +191,13 @@ public class HomeFragment extends Fragment {
                         jsonObject.getString("serial_number")
                 ));
             }
-        }
-        catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        return  pL;
+        return pL;
     }
 
-        public void setAlarm(){
+    public void setAlarm() {
         AlarmManager alarms = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
 
         Receiver receiver = new Receiver();
@@ -247,15 +241,15 @@ public class HomeFragment extends Fragment {
                         intent.putExtra("days", Long.toString(daysDiff));
                         intent.putExtra("id", Integer.toString(cN.getIdNot()));
                         PendingIntent operation = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-                        alarms.set(AlarmManager.RTC_WAKEUP, 5000, operation) ;
+                        alarms.set(AlarmManager.RTC_WAKEUP, 5000, operation);
                     }
                 }
             }
         }
     }
 
-     private Calendar calculateMilliseconds(String expDate){
-        String [] dateComponents = expDate.split("-");
+    private Calendar calculateMilliseconds(String expDate) {
+        String[] dateComponents = expDate.split("-");
         int year = Integer.parseInt(dateComponents[0]);
         int month = Integer.parseInt(dateComponents[1]);
         int day = Integer.parseInt(dateComponents[2]);

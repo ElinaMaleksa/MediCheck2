@@ -6,8 +6,6 @@ public class ContentNotifications {
     String bestBeforeNot;
     long daysDiff;
 
-
-
     public ContentNotifications(int idNot, String nameNot ,String bestBeforeNot, long daysDiff) {
         this.idNot = idNot;
         this.nameNot = nameNot;
