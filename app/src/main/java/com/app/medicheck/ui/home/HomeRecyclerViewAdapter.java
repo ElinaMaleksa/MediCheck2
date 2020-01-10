@@ -18,15 +18,54 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.RecyclerViewHolder>{
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.RecyclerViewHolder> {
     HomeFragment mHomeFragment;
     ArrayList<Products> mProductsList;
+
+    public HomeRecyclerViewAdapter(HomeFragment homeFragment, ArrayList<Products> products) {
+        this.mHomeFragment = homeFragment;
+        this.mProductsList = products;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    @NonNull
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        LayoutInflater layoutInflater = LayoutInflater.from(mHomeFragment.getContext());
+        View view = layoutInflater.inflate(R.layout.product_list_item, viewGroup, false);
+
+        return new RecyclerViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
+        holder.mName.setText(mProductsList.get(i).getName());
+        holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
+        holder.mIngredients.setText(mProductsList.get(i).getIngredients());
+        holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
+
+        List<String> fav = Favourites.getData();
+        for (String s : fav) {
+            if (s.equals(mProductsList.get(i).getSerialNumber())) {
+                holder.mCheckBoxStar.setChecked(true);
+            }
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return (mProductsList == null) ? 0 : mProductsList.size();
+    }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         TextView mName, mIngredients, mBestBefore, mSerialNumber;
-        private ImageButton mButtonSeeMore;
         CheckBox mCheckBoxStar;
+        private ImageButton mButtonSeeMore;
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,7 +80,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             mCheckBoxStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(((CompoundButton) view).isChecked()){
+                    if (((CompoundButton) view).isChecked()) {
                         //add serial number to favourite list
                         Favourites.setData(mSerialNumber.getText().toString());
 
@@ -53,60 +92,21 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             });
 
             mButtonSeeMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nameProduct = mName.getText().toString();
-                String bestBefore = mBestBefore.getText().toString();
-                String ingredients = mIngredients.getText().toString();
-                String serialNumber = mSerialNumber.getText().toString();
+                @Override
+                public void onClick(View v) {
+                    String nameProduct = mName.getText().toString();
+                    String bestBefore = mBestBefore.getText().toString();
+                    String ingredients = mIngredients.getText().toString();
+                    String serialNumber = mSerialNumber.getText().toString();
 
-                Intent intent = new Intent(mButtonSeeMore.getContext(), ProductDetailsActivity.class);
-                intent.putExtra("product_name", nameProduct);
-                intent.putExtra("product_ingredients", ingredients);
-                intent.putExtra("product_best_before", bestBefore);
-                intent.putExtra("product_serial_number", serialNumber);
-                mButtonSeeMore.getContext().startActivity(intent);
-            }
-        });
+                    Intent intent = new Intent(mButtonSeeMore.getContext(), ProductDetailsActivity.class);
+                    intent.putExtra("product_name", nameProduct);
+                    intent.putExtra("product_ingredients", ingredients);
+                    intent.putExtra("product_best_before", bestBefore);
+                    intent.putExtra("product_serial_number", serialNumber);
+                    mButtonSeeMore.getContext().startActivity(intent);
+                }
+            });
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
-
-    public HomeRecyclerViewAdapter(HomeFragment homeFragment, ArrayList<Products> products) {
-        this.mHomeFragment = homeFragment;
-        this.mProductsList = products;
-    }
-
-    @Override
-    @NonNull
-      public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-          LayoutInflater layoutInflater = LayoutInflater.from(mHomeFragment.getContext());
-          View view = layoutInflater.inflate(R.layout.product_list_item, viewGroup, false);
-
-          return new RecyclerViewHolder(view);
-      }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
-        holder.mName.setText(mProductsList.get(i).getName());
-        holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
-        holder.mIngredients.setText(mProductsList.get(i).getIngredients());
-        holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
-
-        List <String> fav = Favourites.getData();
-        for (String s : fav) {
-            if (s.equals(mProductsList.get(i).getSerialNumber())) {
-                holder.mCheckBoxStar.setChecked(true);
-            }
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return (mProductsList == null) ? 0 : mProductsList.size();
     }
 }

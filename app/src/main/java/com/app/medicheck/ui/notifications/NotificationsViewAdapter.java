@@ -17,18 +17,6 @@ public class NotificationsViewAdapter extends RecyclerView.Adapter<Notifications
     NotificationsFragment mNotificationsFragment;
     ArrayList<ContentNotifications> mContentNotificationsList;
 
-    public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
-
-        TextView mName_N, mBestBefore_N, mWarning_N;
-
-        RecyclerViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mName_N = itemView.findViewById(R.id.product_name_not);
-            mBestBefore_N = itemView.findViewById(R.id.best_before_not);
-            mWarning_N = itemView.findViewById(R.id.warning_to_expire);
-        }
-    }
-
     public NotificationsViewAdapter(NotificationsFragment notificationsFragment, ArrayList<ContentNotifications> contentNotifications) {
         this.mNotificationsFragment = notificationsFragment;
         this.mContentNotificationsList = contentNotifications;
@@ -57,5 +45,17 @@ public class NotificationsViewAdapter extends RecyclerView.Adapter<Notifications
     @Override
     public int getItemCount() {
         return (mContentNotificationsList == null) ? 0 : mContentNotificationsList.size();
+    }
+
+    public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+
+        TextView mName_N, mBestBefore_N, mWarning_N;
+
+        RecyclerViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mName_N = itemView.findViewById(R.id.product_name_not);
+            mBestBefore_N = itemView.findViewById(R.id.best_before_not);
+            mWarning_N = itemView.findViewById(R.id.warning_to_expire);
+        }
     }
 }

@@ -17,10 +17,10 @@ public class Favourites {
         data = new ArrayList<>();
         // use SharedPreferences to retrieve all your data
         SharedPreferences pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
-        Map<String,?> allPrefs = pref.getAll();
+        Map<String, ?> allPrefs = pref.getAll();
         Set<String> set = allPrefs.keySet();
         Set<String> hashSet = new HashSet<>();
-        for(String s : set){
+        for (String s : set) {
             hashSet = (Set) allPrefs.get(s);
         }
         assert hashSet != null;
@@ -42,7 +42,7 @@ public class Favourites {
         return data;
     }
 
-     public static void setData(List<String> data) {
+    public static void setData(List<String> data) {
         Favourites.data = data;
     }
 
@@ -50,7 +50,7 @@ public class Favourites {
         Favourites.data.add(serialNumber);
     }
 
-    public static void removeItem(String serialNumber){
+    public static void removeItem(String serialNumber) {
         data.remove(serialNumber);
     }
 }

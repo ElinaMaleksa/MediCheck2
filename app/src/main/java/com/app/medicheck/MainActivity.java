@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.profile_toolbar_item_about:
                 buildAboutDialog();
                 break;
@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void buildAboutDialog () {
+
+    public void buildAboutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.profile_about_title);
         builder.setMessage(R.string.profile_about_message);

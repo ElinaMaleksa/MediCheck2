@@ -22,11 +22,40 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
     ProfileFragment mProfileFragment;
     ArrayList<Products> mProductsList;
 
+    public FavouritesRecyclerViewAdapter(ProfileFragment profileFragment, ArrayList<Products> products) {
+        this.mProfileFragment = profileFragment;
+        this.mProductsList = products;
+    }
+
+    @Override
+    @NonNull
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        LayoutInflater layoutInflater = LayoutInflater.from(mProfileFragment.getContext());
+        View viewFav = layoutInflater.inflate(R.layout.product_list_item, viewGroup, false);
+
+        return new RecyclerViewHolder(viewFav);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
+        holder.mName.setText(mProductsList.get(i).getName());
+        holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
+        holder.mIngredients.setText(mProductsList.get(i).getIngredients());
+        holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
+        holder.mCheckBoxStar.setChecked(true);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return (mProductsList == null) ? 0 : mProductsList.size();
+    }
+
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mName, mIngredients, mBestBefore, mSerialNumber;
-        private ImageButton mButtonSeeMore;
         CheckBox mCheckBoxStar;
+        private ImageButton mButtonSeeMore;
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,34 +100,5 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
                 }
             });
         }
-    }
-
-    public FavouritesRecyclerViewAdapter(ProfileFragment profileFragment, ArrayList<Products> products) {
-        this.mProfileFragment = profileFragment;
-        this.mProductsList = products;
-    }
-
-    @Override
-    @NonNull
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater layoutInflater = LayoutInflater.from(mProfileFragment.getContext());
-        View viewFav = layoutInflater.inflate(R.layout.product_list_item, viewGroup, false);
-
-        return new RecyclerViewHolder(viewFav);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int i) {
-        holder.mName.setText(mProductsList.get(i).getName());
-        holder.mBestBefore.setText(mProductsList.get(i).getBestBefore());
-        holder.mIngredients.setText(mProductsList.get(i).getIngredients());
-        holder.mSerialNumber.setText(mProductsList.get(i).getSerialNumber());
-        holder.mCheckBoxStar.setChecked(true);
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return (mProductsList == null) ? 0 : mProductsList.size();
     }
 }

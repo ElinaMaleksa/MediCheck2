@@ -2,14 +2,14 @@ package com.app.medicheck.ui.notifications;
 
 import android.content.Context;
 
+import com.app.medicheck.R;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.app.medicheck.R;
-
 public class Notification {
 
-    public void createNotification(Context context, String title, String text, int id){
+    public void createNotification(Context context, String title, String text, int id) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Channel1")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle(title)

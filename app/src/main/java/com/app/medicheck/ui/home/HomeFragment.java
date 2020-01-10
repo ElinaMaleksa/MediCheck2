@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -39,25 +38,22 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class HomeFragment extends Fragment {
-    private RecyclerView mRecyclerView;
+    public static final String TAG = "queueItem";
+    public static ArrayList<Products> productList;
     HomeRecyclerViewAdapter mRecyclerViewAdapter;
     SwipeRefreshLayout pullToRefresh;
     TextView mEmptyViewHome;
-
-    public static final String TAG = "queueItem";
     RequestQueue queue;
-    public static ArrayList<Products> productList;
-
     Handler handler = new Handler();
     Runnable refresh;
     boolean urlRequestDone = false;
+    private RecyclerView mRecyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -74,10 +70,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 if (!isNetworkConnected()) {
-                    Toast.makeText(getActivity(),getString((R.string.internet_connection_smth_wrong)), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString((R.string.internet_connection_smth_wrong)), Toast.LENGTH_LONG).show();
                     if (!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
-                }
-                else{
+                } else {
                     createList();
                     showList();
                     if (!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
@@ -158,10 +153,10 @@ public class HomeFragment extends Fragment {
                 if (isNetworkConnected()) {
                     createList();
                     mEmptyViewHome.setText(getString((R.string.database_con_problem)));
-                    if(!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
+                    if (!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
                 } else {
                     mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
-                    if(!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
+                    if (!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
                 }
                 Log.d("", "onErrorResponse: That didn't work!");
             }
@@ -175,7 +170,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
-    
+
     @Override
     public void onStop() {
         super.onStop();
@@ -276,11 +271,13 @@ public class HomeFragment extends Fragment {
 
         return cal;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.profile_toolbar_item_about).setVisible(false);

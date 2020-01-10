@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     String nameProduct, bestBeforeProduct, ingredientsProduct, serialNumberProduct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp () {
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }

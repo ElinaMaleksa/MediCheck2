@@ -1,38 +1,29 @@
 package com.app.medicheck.ui.profile;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
+import com.app.medicheck.R;
+import com.app.medicheck.ui.home.HomeFragment;
+import com.app.medicheck.ui.home.Products;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.app.medicheck.R;
-import com.app.medicheck.ui.home.HomeFragment;
-import com.app.medicheck.ui.home.Products;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ProfileFragment extends Fragment {
-    private RecyclerView mRecyclerView;
     TextView mEmptyViewProfile;
     FavouritesRecyclerViewAdapter mFavouritesRecyclerViewAdapter;
     ArrayList<Products> mProductsArrayList;
+    private RecyclerView mRecyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +43,7 @@ public class ProfileFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!mProductsArrayList.isEmpty()){
+                if (!mProductsArrayList.isEmpty()) {
                     //update list
                     mProductsArrayList.clear();
                 }
@@ -70,7 +61,7 @@ public class ProfileFragment extends Fragment {
         List<String> fav = Favourites.getData();
 
         for (Products p : allProducts) {
-            for (String s: fav){
+            for (String s : fav) {
                 if (p.getSerialNumber().equals(s)) {
                     favProducts.add(p);
                 }
@@ -79,12 +70,12 @@ public class ProfileFragment extends Fragment {
         mFavouritesRecyclerViewAdapter = new FavouritesRecyclerViewAdapter(ProfileFragment.this, favProducts);
         mRecyclerView.setAdapter(mFavouritesRecyclerViewAdapter);
     }
-    public void changeViewElementVisibility(){
-        if (mFavouritesRecyclerViewAdapter.getItemCount()>0) {
+
+    public void changeViewElementVisibility() {
+        if (mFavouritesRecyclerViewAdapter.getItemCount() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mEmptyViewProfile.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mRecyclerView.setVisibility(View.GONE);
             mEmptyViewProfile.setVisibility(View.VISIBLE);
         }

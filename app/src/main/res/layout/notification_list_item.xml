@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="100"
-    android:background="@color/grayLight"
-    android:gravity="center"
     android:layout_marginBottom="5dp"
+    android:background="@color/grayLight"
     android:divider="?android:dividerVertical"
-    android:showDividers="middle"
+    android:gravity="center"
+    android:minHeight="55dp"
+    android:orientation="horizontal"
     android:padding="5dp"
-    android:minHeight="55dp">
+    android:showDividers="middle"
+    android:weightSum="100">
 
     <TextView
         android:id="@+id/warning_to_expire"
@@ -37,15 +37,15 @@
 
 
     <TextView
+        android:id="@+id/best_before_not"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/best_before_not"
-        app:autoSizeTextType="uniform"
-        android:layout_weight="30"
-        android:text="@string/best_before"
         android:layout_margin="5dp"
+        android:layout_weight="30"
         android:gravity="center"
-        android:textColor="@color/colorTextBlack" />
+        android:text="@string/best_before"
+        android:textColor="@color/colorTextBlack"
+        app:autoSizeTextType="uniform" />
 
 
 </LinearLayout>
