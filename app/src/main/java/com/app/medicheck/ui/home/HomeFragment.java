@@ -75,10 +75,13 @@ public class HomeFragment extends Fragment {
             public void onRefresh() {
                 if (!isNetworkConnected()) {
                     Toast.makeText(getActivity(),getString((R.string.internet_connection_smth_wrong)), Toast.LENGTH_LONG).show();
+                    if (!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
                 }
                 else{
                     createList();
                     showList();
+                    if (!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
+                    else hideBottomBar(false);
                 }
                 changeViewElementVisibility();
                 pullToRefresh.setRefreshing(false);
@@ -100,6 +103,7 @@ public class HomeFragment extends Fragment {
                     changeViewElementVisibility();
                     if (!isNetworkConnected()) {
                         mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
+                        hideBottomBar(false);
                     } else {
                         hideBottomBar(true);
                         pullToRefresh.setRefreshing(true);
@@ -154,8 +158,10 @@ public class HomeFragment extends Fragment {
                 if (isNetworkConnected()) {
                     createList();
                     mEmptyViewHome.setText(getString((R.string.database_con_problem)));
+                    if(!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
                 } else {
                     mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
+                    if(!(mRecyclerViewAdapter.getItemCount() > 0)) hideBottomBar(true);
                 }
                 Log.d("", "onErrorResponse: That didn't work!");
             }
@@ -166,12 +172,10 @@ public class HomeFragment extends Fragment {
         showList();
     }
 
-
     public void onResume() {
         super.onResume();
     }
-
-
+    
     @Override
     public void onStop() {
         super.onStop();
