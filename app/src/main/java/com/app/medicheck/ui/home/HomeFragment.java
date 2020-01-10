@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,19 +87,31 @@ public class HomeFragment extends Fragment {
                     showList();
                     hideBottomBar(false);
                     setAlarm();
+                    mEmptyViewHome.setText(getString((R.string.no_data_available_home)));
                     changeViewElementVisibility();
                 }
                 else{
                     changeViewElementVisibility();
-                    hideBottomBar(true);
-                    pullToRefresh.setRefreshing(true);
-                    handler.postDelayed(refresh, 1000);
+                    if (!isNetworkConnected()){
+                        mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
+                    }
+                    else{
+                        hideBottomBar(true);
+                        pullToRefresh.setRefreshing(true);
+                        handler.postDelayed(refresh, 1000);
+                    }
                 }
             }
         };
         handler.post(refresh);
 
         return root;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
     public void changeViewElementVisibility(){
@@ -132,8 +146,13 @@ public class HomeFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mEmptyViewHome.setText(getString((R.string.database_crashed)));
-                createList();
+                if(isNetworkConnected()){
+                    createList();
+                    mEmptyViewHome.setText(getString((R.string.database_con_problem)));
+                }
+                else{
+                    mEmptyViewHome.setText(getString((R.string.internet_connection_smth_wrong)));
+                }
                 Log.d("", "onErrorResponse: That didn't work!");
             }
         });
