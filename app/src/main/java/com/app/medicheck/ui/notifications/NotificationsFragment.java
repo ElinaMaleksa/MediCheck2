@@ -2,6 +2,7 @@ package com.app.medicheck.ui.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -111,9 +112,17 @@ public class NotificationsFragment extends Fragment {
        }
     public void onResume() {
         super.onResume();
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null && activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().hide();
-        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.profile_toolbar_item_about).setVisible(false);
+        menu.findItem(R.id.profile_toolbar_item_buy_products).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pullToRefresh"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,11 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include
-            android:id="@+id/fragment_home_toolbar"
-            layout="@layout/fragment_toolbar"
-            tools:layout_editor_absoluteX="-157dp"
-            tools:layout_editor_absoluteY="95dp" />
         <TextView
             android:id="@+id/titleDetails"
             android:layout_width="match_parent"

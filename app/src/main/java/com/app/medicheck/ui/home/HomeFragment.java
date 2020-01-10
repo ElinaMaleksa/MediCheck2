@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -65,7 +67,6 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         pullToRefresh = root.findViewById(R.id.pullToRefresh);
-
         createList();
 
         //refreshing manually
@@ -165,13 +166,11 @@ public class HomeFragment extends Fragment {
         showList();
     }
 
+
     public void onResume() {
         super.onResume();
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null && activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().hide();
-        }
     }
+
 
     @Override
     public void onStop() {
@@ -272,5 +271,16 @@ public class HomeFragment extends Fragment {
         cal.set(Calendar.MILLISECOND, 0);
 
         return cal;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.profile_toolbar_item_about).setVisible(false);
+        menu.findItem(R.id.profile_toolbar_item_buy_products).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 }

@@ -1,9 +1,14 @@
 package com.app.medicheck;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.app.medicheck.ui.profile.Favourites;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
         //Passing each menu ID as a set of Ids
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         createNotificationChannel();
         Favourites.load(this);
+
     }
 
     protected void onStop() {
@@ -62,5 +69,43 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.profile_toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.profile_toolbar_item_about:
+                buildAboutDialog();
+                break;
+            case R.id.profile_toolbar_item_buy_products:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://lipsum.com"));
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void buildAboutDialog () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.profile_about_title);
+        builder.setMessage(R.string.profile_about_message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

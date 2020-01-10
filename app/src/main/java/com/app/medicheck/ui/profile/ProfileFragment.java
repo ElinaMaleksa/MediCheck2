@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         mEmptyViewProfile = root.findViewById(R.id.empty_view_profile);
         mRecyclerView = root.findViewById(R.id.recycler_view_profile);
+
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -88,43 +91,9 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null && activity.getSupportActionBar() != null) {
-            createActionBar();
-        }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
-    public void createActionBar() {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        androidx.appcompat.widget.Toolbar profileToolbar = activity.findViewById(R.id.fragment_profile_toolbar);
-        profileToolbar.inflateMenu(R.menu.profile_toolbar_menu);
-        profileToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.profile_toolbar_item_about:
-                        buildAboutDialog();
-                        break;
-                    case R.id.profile_toolbar_item_buy_products:
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://lipsum.com"));
-                        startActivity(intent);
-                        break;
-                        default:
-                            break;
-                }
-                return false;
-            }
-        });
-    }
-
-    public void buildAboutDialog () {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.profile_about_title);
-        builder.setMessage(R.string.profile_about_message);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }
