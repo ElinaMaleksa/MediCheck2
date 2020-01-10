@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.profile_toolbar_item_buy_products:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://lipsum.com"));
+                intent.setData(Uri.parse("https://webshopbusiness.000webhostapp.com/?fbclid=IwAR1P8fEtZ4n5dud0gLIS1lAfpjhFFz8g_vcEu30tTXS6NXZTQidBnaRaljE"));
                 startActivity(intent);
                 break;
             default:
