@@ -30,4 +30,5 @@
     <string name="no_data_available_notifications">You have no products that will expire in the next two weeks</string>
     <string name="no_data_available_profile">Your favourite list is empty</string>
     <string name="no_data_available_home">Product list is on the way</string>
+    <string name="database_crashed">Database crashed, we are tyring our best to reconnect.</string>
 </resources>

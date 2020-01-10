@@ -132,6 +132,7 @@ public class HomeFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mEmptyViewHome.setText(getString((R.string.database_crashed)));
                 Log.d("", "onErrorResponse: That didn't work!");
             }
         });
