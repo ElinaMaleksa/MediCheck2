@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -71,7 +72,14 @@ public class HomeFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                createList();
+                if (!isNetworkConnected()) {
+                    Toast.makeText(getActivity(),getString((R.string.internet_connection_smth_wrong)), Toast.LENGTH_LONG).show();
+                }
+                else{
+                    createList();
+                    showList();
+                }
+                changeViewElementVisibility();
                 pullToRefresh.setRefreshing(false);
             }
         });
